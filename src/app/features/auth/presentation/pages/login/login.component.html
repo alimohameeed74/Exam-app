@@ -1,3 +1,232 @@
-<p>
-  login works!
-</p>
+<div class="min-h-screen flex flex-col lg:flex-row bg-white">
+  <aside
+    class="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-linear-to-br from-blue-50 via-blue-100 to-blue-200"
+  >
+    <div class="relative z-10 flex flex-col px-10 xl:px-16 py-12 w-full">
+      <div class="flex items-center gap-2 mb-20">
+        <span
+          class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-blue-600 text-white"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l-4 3 4 3m8-6l4 3-4 3" />
+          </svg>
+        </span>
+        <a routerLink="/" class="text-blue-700 font-bold text-lg">Exam App</a>
+      </div>
+
+      <h1 class="text-3xl xl:text-4xl font-bold text-gray-900 leading-snug mb-14 max-w-md">
+        Empower your learning journey with our smart exam platform.
+      </h1>
+
+      <ul class="space-y-8 max-w-md">
+        <li class="flex gap-4">
+          <span
+            class="shrink-0 w-10 h-10 flex items-center justify-center rounded-lg border-2 border-blue-600 text-blue-600"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 01-6.23-2.308L5 14.5"
+              />
+            </svg>
+          </span>
+          <div>
+            <h2 class="font-bold text-blue-700">Tailored Diplomas</h2>
+            <p class="text-sm text-gray-600 mt-1">
+              Choose from specialized tracks like Frontend, Backend, and Mobile Development.
+            </p>
+          </div>
+        </li>
+
+        <li class="flex gap-4">
+          <span
+            class="shrink-0 w-10 h-10 flex items-center justify-center rounded-lg border-2 border-blue-600 text-blue-600"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+              />
+            </svg>
+          </span>
+          <div>
+            <h2 class="font-bold text-blue-700">Focused Exams</h2>
+            <p class="text-sm text-gray-600 mt-1">
+              Access topic-specific tests including HTML, CSS, JavaScript, and more.
+            </p>
+          </div>
+        </li>
+
+        <li class="flex gap-4">
+          <span
+            class="shrink-0 w-10 h-10 flex items-center justify-center rounded-lg border-2 border-blue-600 text-blue-600"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"
+              />
+            </svg>
+          </span>
+          <div>
+            <h2 class="font-bold text-blue-700">Smart Multi-Step Forms</h2>
+            <p class="text-sm text-gray-600 mt-1">
+              Choose from specialized tracks like Frontend, Backend, and Mobile Development.
+            </p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="flex flex-1 items-center justify-center px-6 py-12 sm:px-10">
+    <div class="w-full max-w-sm">
+      <div class="flex items-center gap-2 mb-10 lg:hidden">
+        <span
+          class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-blue-600 text-white"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l-4 3 4 3m8-6l4 3-4 3" />
+          </svg>
+        </span>
+        <a routerLink="/" class="text-blue-700 font-bold text-lg">Exam App</a>
+      </div>
+
+      <h1 class="text-2xl font-bold text-gray-900 mb-8">Login</h1>
+
+      <form id="login-form" class="space-y-6" novalidate>
+        <div>
+          <label for="username" class="block mb-2 text-sm font-medium text-gray-900"
+            >Username</label
+          >
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="user123"
+            aria-describedby="username-error"
+            aria-invalid="true"
+            class="bg-gray-50 border border-red-400 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 placeholder-gray-400"
+          />
+          <p id="username-error" class="mt-1.5 text-sm text-red-600">Your username is required</p>
+        </div>
+
+        <div>
+          <label for="password" class="block mb-2 text-sm font-medium text-gray-900"
+            >Password</label
+          >
+          <div class="relative">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="•••••••"
+              aria-describedby="password-error"
+              aria-invalid="true"
+              class="bg-gray-50 border border-red-400 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 pr-10 placeholder-gray-400"
+            />
+            <button
+              type="button"
+              id="toggle-password"
+              aria-label="Show password"
+              class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600"
+            >
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.774 3.162 10.066 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+                />
+              </svg>
+            </button>
+          </div>
+          <p id="password-error" class="mt-1.5 text-sm text-red-600">Your password is required</p>
+          <div class="text-right mt-2">
+            <a routerLink="#" class="text-sm text-blue-600 hover:underline"
+              >Forgot your password?</a
+            >
+          </div>
+        </div>
+
+        <div
+          id="form-error"
+          role="alert"
+          class="flex items-center justify-center gap-2 rounded-lg bg-red-50 border border-red-200 py-3 px-4"
+        >
+          <svg
+            class="w-4 h-4 text-red-600 shrink-0"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span class="text-sm text-red-600">Something went wrong</span>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center transition-colors"
+        >
+          Login
+        </button>
+      </form>
+
+      <p class="text-center text-sm text-gray-600 mt-6">
+        Don't have an account?
+        <a routerLink="#" class="text-blue-600 font-medium hover:underline">Create yours</a>
+      </p>
+    </div>
+  </main>
+</div>
