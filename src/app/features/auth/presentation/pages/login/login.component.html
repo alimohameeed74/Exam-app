@@ -21,7 +21,7 @@
     <app-shared-input
       [obj]="{ id: 'username', label: 'Username', type: 'text', placeHolder: 'user123' }"
     ></app-shared-input>
-    <p id="username-error" class="mt-1.5 text-sm text-red-600">Your username is required</p>
+    <app-error-mess mess="Your username is required"></app-error-mess>
   </div>
 
   <div>
@@ -29,7 +29,8 @@
       [obj]="{ id: 'password', label: 'Password', type: 'password', placeHolder: '•••••••' }"
     ></app-shared-input>
 
-    <p id="password-error" class="mt-1.5 text-sm text-red-600">Your password is required</p>
+    <app-error-mess mess="Your password is required"></app-error-mess>
+
     <div class="text-right mt-2">
       <a routerLink="/auth/forget-password" class="text-sm text-blue-600 hover:underline"
         >Forgot your password?</a
