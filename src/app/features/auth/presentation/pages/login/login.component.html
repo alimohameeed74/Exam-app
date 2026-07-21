@@ -16,20 +16,35 @@
 
 <h1 class="text-3xl font-bold text-gray-900 mb-8 font-inter">Login</h1>
 
-<form id="login-form" class="space-y-6" novalidate>
+<form class="space-y-6" (ngSubmit)="login()" [formGroup]="loginForm">
   <div>
     <app-shared-input
+      [control]="userNameController"
       [obj]="{ id: 'username', label: 'Username', type: 'text', placeHolder: 'user123' }"
     ></app-shared-input>
-    <app-error-mess mess="Your username is required"></app-error-mess>
+    @if (userNameController.touched && userNameController.errors) {
+      @if (userNameController.hasError('required')) {
+        <app-error-mess mess="Your username is required"></app-error-mess>
+      }
+      @if (userNameController.hasError('pattern')) {
+        <app-error-mess mess="Invalid username"></app-error-mess>
+      }
+    }
   </div>
 
   <div>
     <app-shared-input
+      [control]="passwordController"
       [obj]="{ id: 'password', label: 'Password', type: 'password', placeHolder: '•••••••' }"
     ></app-shared-input>
-
-    <app-error-mess mess="Your password is required"></app-error-mess>
+    @if (passwordController.touched && passwordController.errors) {
+      @if (passwordController.hasError('required')) {
+        <app-error-mess mess="Your password is required"></app-error-mess>
+      }
+      @if (passwordController.hasError('pattern')) {
+        <app-error-mess mess="Invalid password"></app-error-mess>
+      }
+    }
 
     <div class="text-right mt-2">
       <a routerLink="/auth/forget-password" class="text-sm text-blue-600 hover:underline"
@@ -37,12 +52,14 @@
       >
     </div>
   </div>
-
-  <app-alert mess="Something went wrong"></app-alert>
+  @if (err()) {
+    <app-alert mess="Something went wrong"></app-alert>
+  }
 
   <button
     type="submit"
-    class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center transition-colors"
+    [disabled]="isLoading()"
+    class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center transition-colors disabled:opacity-50"
   >
     Login
   </button>
