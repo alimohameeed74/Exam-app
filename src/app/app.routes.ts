@@ -6,6 +6,7 @@ export const routes: Routes = [
     path: 'auth',
     loadComponent: () =>
       import('./layouts/auth-layout/auth-layout.component').then((l) => l.AuthLayoutComponent),
+    loadChildren: () => import('./features/auth/auth.routes').then((r) => r.routes),
   },
   {
     path: 'main',
