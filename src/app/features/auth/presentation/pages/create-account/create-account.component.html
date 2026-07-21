@@ -1,3 +1,410 @@
-<p>
-  create-account works!
-</p>
+<main class="py-12 space-y-16">
+  <section
+    aria-labelledby="step1-heading"
+    class="bg-white rounded-xl border border-gray-100 shadow-sm p-6 sm:p-8"
+  >
+    <h1 id="step1-heading" class="text-2xl font-bold text-gray-900 mb-6 font-inter">
+      Create Account
+    </h1>
+
+    <form novalidate class="space-y-6">
+      <div>
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 font-geist"
+          >Email</label
+        >
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="user@example.com"
+          class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="w-full flex items-center justify-center gap-1.5 text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-3 text-center transition-colors font-geist"
+      >
+        Next
+        <svg
+          class="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+        </svg>
+      </button>
+    </form>
+
+    <p class="text-center text-sm text-gray-600 mt-6 font-geist">
+      Already have an account?
+      <a href="#" class="text-blue-600 font-medium hover:underline">Login</a>
+    </p>
+  </section>
+
+  <section
+    aria-labelledby="step2-heading"
+    class="bg-white rounded-xl border border-gray-100 shadow-sm p-6 sm:p-8"
+  >
+    <ol class="flex items-center mb-6" aria-label="Progress">
+      <li class="flex items-center flex-1">
+        <span
+          class="w-2.5 h-2.5 rounded-sm bg-blue-600 rotate-45 shrink-0"
+          aria-hidden="true"
+        ></span>
+        <span class="flex-1 h-0.5 bg-blue-600 mx-1"></span>
+      </li>
+      <li class="flex items-center flex-1">
+        <span class="relative shrink-0" aria-current="step">
+          <span class="absolute inset-0 -m-1.5 rounded-full bg-blue-100"></span>
+          <span class="relative block w-2.5 h-2.5 rounded-sm bg-blue-600 rotate-45"></span>
+        </span>
+        <span class="flex-1 h-0.5 border-t-2 border-dashed border-blue-300 mx-1"></span>
+      </li>
+      <li class="flex items-center flex-1">
+        <span
+          class="w-2.5 h-2.5 rounded-sm border-2 border-blue-300 bg-white rotate-45 shrink-0"
+          aria-hidden="true"
+        ></span>
+        <span class="flex-1 h-0.5 border-t-2 border-dashed border-blue-300 mx-1"></span>
+      </li>
+      <li class="flex items-center">
+        <span
+          class="w-2.5 h-2.5 rounded-sm border-2 border-blue-300 bg-white rotate-45 shrink-0"
+          aria-hidden="true"
+        ></span>
+      </li>
+    </ol>
+
+    <h1 id="step2-heading" class="text-2xl font-bold text-gray-900">Create Account</h1>
+    <h2 class="text-lg font-semibold text-blue-600 mt-1 mb-3 font-inter">Verify OTP</h2>
+
+    <p class="text-sm text-gray-600 mb-6 font-geist">
+      Please enter the 6-digit code we have sent to:
+      <span class="text-gray-900">user@example.com</span>.
+      <a href="#" class="text-blue-600 hover:underline">Edit</a>
+    </p>
+
+    <form novalidate class="space-y-6">
+      <fieldset class="w-full">
+        <legend class="sr-only">6-digit verification code</legend>
+        <div class="flex gap-2 justify-center" role="group">
+          <label for="otp-1" class="sr-only">Digit 1</label>
+          <input
+            id="otp-1"
+            type="text"
+            inputmode="numeric"
+            maxlength="1"
+            value="1"
+            class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+          <label for="otp-2" class="sr-only">Digit 2</label>
+          <input
+            id="otp-2"
+            type="text"
+            inputmode="numeric"
+            maxlength="1"
+            value="2"
+            class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+          <label for="otp-3" class="sr-only">Digit 3</label>
+          <input
+            id="otp-3"
+            type="text"
+            inputmode="numeric"
+            maxlength="1"
+            value="3"
+            class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+          <label for="otp-4" class="sr-only">Digit 4</label>
+          <input
+            id="otp-4"
+            type="text"
+            inputmode="numeric"
+            maxlength="1"
+            value="4"
+            class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+          <label for="otp-5" class="sr-only">Digit 5</label>
+          <input
+            id="otp-5"
+            type="text"
+            inputmode="numeric"
+            maxlength="1"
+            value="5"
+            class="w-9 h-9 text-center text-[12px] border-2 border-blue-500 rounded-sm ring-2 ring-blue-100"
+          />
+          <label for="otp-6" class="sr-only">Digit 6</label>
+          <input
+            id="otp-6"
+            type="text"
+            inputmode="numeric"
+            maxlength="1"
+            class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+      </fieldset>
+
+      <p class="text-center text-sm text-gray-500 font-geist">
+        You can request another code in: <span id="otp-timer">60s</span>
+      </p>
+
+      <button
+        type="submit"
+        class="w-full font-geist flex items-center justify-center gap-1.5 text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-3 text-center transition-colors"
+      >
+        Verify Code
+      </button>
+    </form>
+  </section>
+
+  <section
+    aria-labelledby="step3-heading"
+    class="bg-white rounded-xl border border-gray-100 shadow-sm p-6 sm:p-8"
+  >
+    <ol class="flex items-center mb-6" aria-label="Progress">
+      <li class="flex items-center flex-1">
+        <span
+          class="w-2.5 h-2.5 rounded-sm bg-blue-600 rotate-45 shrink-0"
+          aria-hidden="true"
+        ></span>
+        <span class="flex-1 h-0.5 bg-blue-600 mx-1"></span>
+      </li>
+      <li class="flex items-center flex-1">
+        <span
+          class="w-2.5 h-2.5 rounded-sm bg-blue-600 rotate-45 shrink-0"
+          aria-hidden="true"
+        ></span>
+        <span class="flex-1 h-0.5 bg-blue-600 mx-1"></span>
+      </li>
+      <li class="flex items-center flex-1">
+        <span class="relative shrink-0" aria-current="step">
+          <span class="absolute inset-0 -m-1.5 rounded-full bg-blue-100"></span>
+          <span class="relative block w-2.5 h-2.5 rounded-sm bg-blue-600 rotate-45"></span>
+        </span>
+        <span class="flex-1 h-0.5 border-t-2 border-dashed border-blue-300 mx-1"></span>
+      </li>
+      <li class="flex items-center">
+        <span
+          class="w-2.5 h-2.5 rounded-sm border-2 border-blue-300 bg-white rotate-45 shrink-0"
+          aria-hidden="true"
+        ></span>
+      </li>
+    </ol>
+
+    <h1 id="step3-heading" class="text-2xl font-bold text-gray-900">Create Account</h1>
+    <h2 class="text-lg font-semibold text-blue-600 mt-1 mb-6 font-inter">Tell us more about you</h2>
+
+    <form novalidate class="space-y-5">
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="first-name" class="block mb-2 text-sm font-medium text-gray-900"
+            >First name<span class="text-red-500">*</span></label
+          >
+          <input
+            type="text"
+            id="first-name"
+            name="first-name"
+            placeholder="Ahmed"
+            required
+            class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400"
+          />
+        </div>
+        <div>
+          <label for="last-name" class="block mb-2 text-sm font-medium text-gray-900"
+            >Last name<span class="text-red-500">*</span></label
+          >
+          <input
+            type="text"
+            id="last-name"
+            name="last-name"
+            placeholder="Abdullah"
+            required
+            class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label for="username" class="block mb-2 text-sm font-medium text-gray-900"
+          >Username<span class="text-red-500">*</span></label
+        >
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="user123"
+          required
+          class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400"
+        />
+      </div>
+
+      <div>
+        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Phone</label>
+        <div
+          class="flex items-stretch border border-gray-200 rounded-lg overflow-hidden focus-within:ring-1 focus-within:ring-blue-500 focus-within:border-blue-500"
+        >
+          <label for="country-code" class="sr-only">Country code</label>
+          <select
+            id="country-code"
+            name="country-code"
+            class="border-0 border-r border-gray-200 bg-white text-sm text-gray-700 pl-3 pr-2 focus:ring-0 focus:outline-none"
+          >
+            <option value="+20" selected>🇪🇬 EG (+20)</option>
+            <option value="+966">🇸🇦 SA (+966)</option>
+            <option value="+971">🇦🇪 AE (+971)</option>
+            <option value="+1">🇺🇸 US (+1)</option>
+          </select>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="1012345678"
+            class="flex-1 border-0 text-sm text-gray-900 placeholder-gray-400 p-2.5 focus:ring-0"
+          />
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full flex items-center justify-center gap-1.5 text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-3 text-center transition-colors"
+      >
+        Next
+        <svg
+          class="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+        </svg>
+      </button>
+    </form>
+  </section>
+
+  <section
+    aria-labelledby="step4-heading"
+    class="bg-white rounded-xl border border-gray-100 shadow-sm p-6 sm:p-8"
+  >
+    <ol class="flex items-center mb-6" aria-label="Progress">
+      <li class="flex items-center flex-1">
+        <span
+          class="w-2.5 h-2.5 rounded-sm bg-blue-600 rotate-45 shrink-0"
+          aria-hidden="true"
+        ></span>
+        <span class="flex-1 h-0.5 bg-blue-600 mx-1"></span>
+      </li>
+      <li class="flex items-center flex-1">
+        <span
+          class="w-2.5 h-2.5 rounded-sm bg-blue-600 rotate-45 shrink-0"
+          aria-hidden="true"
+        ></span>
+        <span class="flex-1 h-0.5 bg-blue-600 mx-1"></span>
+      </li>
+      <li class="flex items-center flex-1">
+        <span
+          class="w-2.5 h-2.5 rounded-sm bg-blue-600 rotate-45 shrink-0"
+          aria-hidden="true"
+        ></span>
+        <span class="flex-1 h-0.5 bg-blue-600 mx-1"></span>
+      </li>
+      <li class="flex items-center">
+        <span class="relative shrink-0" aria-current="step">
+          <span class="absolute inset-0 -m-1.5 rounded-full bg-blue-100"></span>
+          <span class="relative block w-2.5 h-2.5 rounded-sm bg-blue-600 rotate-45"></span>
+        </span>
+      </li>
+    </ol>
+
+    <h1 id="step4-heading" class="text-2xl font-bold text-gray-900">Create Account</h1>
+    <h2 class="text-lg font-semibold text-blue-600 mt-1 mb-6">Create a strong password</h2>
+
+    <form novalidate class="space-y-5">
+      <div>
+        <label for="password" class="block mb-2 text-sm font-medium text-gray-900"
+          >Password<span class="text-red-500">*</span></label
+        >
+        <div class="relative">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="••••••••"
+            required
+            class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pr-10 placeholder-gray-400"
+          />
+          <button
+            type="button"
+            data-toggle-target="password"
+            aria-label="Show password"
+            class="toggle-password absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.774 3.162 10.066 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900"
+          >Confirm Password<span class="text-red-500">*</span></label
+        >
+        <div class="relative">
+          <input
+            type="password"
+            id="confirm-password"
+            name="confirm-password"
+            placeholder="••••••••"
+            required
+            class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pr-10 placeholder-gray-400"
+          />
+          <button
+            type="button"
+            data-toggle-target="confirm-password"
+            aria-label="Show password"
+            class="toggle-password absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.774 3.162 10.066 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center transition-colors"
+      >
+        Create Account
+      </button>
+    </form>
+  </section>
+</main>
