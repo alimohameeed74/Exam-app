@@ -4,7 +4,7 @@
   }}</label>
   <input
     [formControl]="control()"
-    [type]="obj().type"
+    [type]="hidePassword() ? 'password' : 'text'"
     [id]="obj().id"
     [name]="obj().id"
     [placeholder]="obj().placeHolder"
@@ -14,12 +14,13 @@
   />
   @if (obj().type === 'password') {
     <button
+      (click)="togglePassword()"
       type="button"
       id="toggle-password"
       aria-label="Show password"
       class="absolute top-11 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600"
     >
-      <i class="fa-solid fa-eye"></i>
+      <i class="fa-solid" [class]="hidePassword() ? 'fa-eye' : 'fa-eye-slash'"></i>
     </button>
   }
 </div>

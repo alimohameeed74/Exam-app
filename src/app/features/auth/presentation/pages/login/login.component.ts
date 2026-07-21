@@ -41,12 +41,12 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.isLoading.set(true);
       this.authService.login(this.loginForm.getRawValue()).subscribe({
-        next: (res) => {
+        next: (res: any) => {
           this.err.set(false);
           this.isLoading.set(false);
           console.log(res);
         },
-        error: (err) => {
+        error: (err: any) => {
           this.err.set(true);
           this.isLoading.set(false);
           console.log(err);
