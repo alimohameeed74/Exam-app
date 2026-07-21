@@ -1,3 +1,56 @@
-<p>
-  login works!
+<div class="flex items-center gap-2 mb-10 lg:hidden">
+  <span class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-blue-600 text-white">
+    <svg
+      class="w-4 h-4"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l-4 3 4 3m8-6l4 3-4 3" />
+    </svg>
+  </span>
+  <span class="text-blue-600 font-semibold text-[20px] font-geist">Exam App</span>
+</div>
+
+<h1 class="text-3xl font-bold text-gray-900 mb-8 font-inter">Login</h1>
+
+<form id="login-form" class="space-y-6" novalidate>
+  <div>
+    <app-shared-input
+      [obj]="{ id: 'username', label: 'Username', type: 'text', placeHolder: 'user123' }"
+    ></app-shared-input>
+    <app-error-mess mess="Your username is required"></app-error-mess>
+  </div>
+
+  <div>
+    <app-shared-input
+      [obj]="{ id: 'password', label: 'Password', type: 'password', placeHolder: '•••••••' }"
+    ></app-shared-input>
+
+    <app-error-mess mess="Your password is required"></app-error-mess>
+
+    <div class="text-right mt-2">
+      <a routerLink="/auth/forget-password" class="text-sm text-blue-600 hover:underline"
+        >Forgot your password?</a
+      >
+    </div>
+  </div>
+
+  <app-alert mess="Something went wrong"></app-alert>
+
+  <button
+    type="submit"
+    class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center transition-colors"
+  >
+    Login
+  </button>
+</form>
+
+<p class="text-center text-sm text-gray-600 mt-6">
+  Don't have an account?
+  <a routerLink="/auth/create-account" class="text-blue-600 font-medium hover:underline"
+    >Create yours</a
+  >
 </p>
