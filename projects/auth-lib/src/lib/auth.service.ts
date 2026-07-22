@@ -3,15 +3,16 @@ import { Injectable, inject } from '@angular/core';
 import { AuthApi } from './base/authApi.js';
 import { Observable } from 'rxjs';
 import { AuthEndPoint } from './enums/Auth-endPoint.js';
-import { Register } from './models/register.js';
+import { Register } from './models/request/register.js';
+import { Login } from './models/response/login.js';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService extends AuthApi {
   private httpClient = inject(HttpClient);
-  login(data: { username: string; password: string }): Observable<any> {
-    return this.httpClient.post<{ username: string; password: string }>(AuthEndPoint.LOGIN, data);
+  login(data: { username: string; password: string }): Observable<Login> {
+    return this.httpClient.post<Login>(AuthEndPoint.LOGIN, data);
   }
   register(data: Register): Observable<any> {
     return this.httpClient.post(AuthEndPoint.REGISTER, data);

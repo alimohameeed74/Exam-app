@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Register } from '../models/register.js';
+import { Register } from '../models/request/register.js';
 
 export abstract class AuthApi {
   abstract login(data: { username: string; password: string }): Observable<any>;

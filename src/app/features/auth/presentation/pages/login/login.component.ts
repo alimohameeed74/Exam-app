@@ -7,6 +7,7 @@ import { RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { Login } from '../../../domain/models/response/login.js';
+import { ErrorResponse } from '../../../../../core/models/response/error-response.js';
 
 @Component({
   selector: 'app-login',
@@ -52,7 +53,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.isLoading.set(false);
             console.log(res);
           },
-          error: (err: any) => {
+          error: (err: ErrorResponse) => {
             this.err.set(true);
             this.isLoading.set(false);
             console.log(err);
