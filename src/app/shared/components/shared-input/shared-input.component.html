@@ -4,7 +4,7 @@
   }}</label>
   <input
     [formControl]="control()"
-    [type]="hidePassword() ? 'password' : 'text'"
+    [type]="obj().type === 'password' ? (hidePassword() ? 'password' : 'text') : obj().type"
     [id]="obj().id"
     [name]="obj().id"
     [placeholder]="obj().placeHolder"
