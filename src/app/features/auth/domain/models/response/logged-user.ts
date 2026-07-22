@@ -8,7 +8,7 @@ export interface LoggedUser {
   profilePhoto: string;
   emailVerified: boolean;
   phoneVerified: boolean;
-  role: string;
+  role: 'ADMIN' | 'USER';
   createdAt: string;
   updatedAt: string;
 }
