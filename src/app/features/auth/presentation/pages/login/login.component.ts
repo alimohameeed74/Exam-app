@@ -1,4 +1,4 @@
-import { AuthService } from '../../../../../../../dist/auth-lib/';
+import { AuthService } from 'auth-lib';
 import { Component, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { SharedInputComponent } from '../../../../../shared/components/shared-input/shared-input.component';
 import { ErrorMessComponent } from '../../../../../shared/components/error-mess/error-mess.component';
