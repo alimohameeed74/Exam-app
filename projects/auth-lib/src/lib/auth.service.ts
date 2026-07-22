@@ -20,11 +20,14 @@ export class AuthService extends AuthApi {
   forgetPassword(data: { email: string; redirectUrl: string }): Observable<any> {
     return this.httpClient.post(AuthEndPoint.FORGET_PASSWORD, data);
   }
-  sendEmailVerification(email: string): Observable<any> {
-    return this.httpClient.post(AuthEndPoint.SEND_EMAIL_VERIFICATION, email);
+  sendEmailVerification(email: string): Observable<{ message: string; code: string }> {
+    return this.httpClient.post<{ message: string; code: string }>(
+      AuthEndPoint.SEND_EMAIL_VERIFICATION,
+      email,
+    );
   }
-  confirmEmail(data: { email: string; code: string }): Observable<any> {
-    return this.httpClient.post(AuthEndPoint.CONFIRM_PASSWORD, data);
+  confirmEmail(data: { email: string; code: string }): Observable<{ message: string }> {
+    return this.httpClient.post<{ message: string }>(AuthEndPoint.CONFIRM_EMAIL, data);
   }
   resetPassword(data: {
     token: string;
