@@ -12,5 +12,5 @@ export const guestGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
-  return userDataService._loggedUserData ? router.createUrlTree(['/main']) : true;
+  return userDataService._loggedUserData() ? router.createUrlTree(['/main']) : true;
 };
