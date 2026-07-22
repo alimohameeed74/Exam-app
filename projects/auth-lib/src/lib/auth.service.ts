@@ -14,8 +14,8 @@ export class AuthService extends AuthApi {
   login(data: { username: string; password: string }): Observable<Login> {
     return this.httpClient.post<Login>(AuthEndPoint.LOGIN, data);
   }
-  register(data: Register): Observable<any> {
-    return this.httpClient.post(AuthEndPoint.REGISTER, data);
+  register(data: Register): Observable<Login> {
+    return this.httpClient.post<Login>(AuthEndPoint.REGISTER, data);
   }
   forgetPassword(data: { email: string; redirectUrl: string }): Observable<any> {
     return this.httpClient.post(AuthEndPoint.FORGET_PASSWORD, data);
