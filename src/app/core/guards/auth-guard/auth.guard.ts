@@ -9,7 +9,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const platformId = inject(PLATFORM_ID);
 
   if (!isPlatformBrowser(platformId)) {
-    return router.createUrlTree(['/auth']);
+    return true;
   }
 
   return userDataService._loggedUserData() ? true : router.createUrlTree(['/auth']);

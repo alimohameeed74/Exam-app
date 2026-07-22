@@ -19,8 +19,28 @@ export class UserDataService {
     } | null,
   ) {
     this.loggedUserData.set(data);
-    if (!isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('userData', JSON.stringify(this.loggedUserData()));
+    }
+  }
+
+  init() {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    const userData = localStorage.getItem('userData');
+
+    if (userData) {
+      this.loggedUserData.set(JSON.parse(userData));
+    }
+  }
+
+  clearLoggedUserData() {
+    this.loggedUserData.set(null);
+
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('userData');
     }
   }
 }

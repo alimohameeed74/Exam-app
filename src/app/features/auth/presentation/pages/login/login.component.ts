@@ -3,11 +3,12 @@ import { Component, inject, OnDestroy, OnInit, signal, WritableSignal } from '@a
 import { SharedInputComponent } from '../../../../../shared/components/shared-input/shared-input.component';
 import { ErrorMessComponent } from '../../../../../shared/components/error-mess/error-mess.component';
 import { AlertComponent } from '../../../../../shared/components/alert/alert.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { Login } from '../../../domain/models/response/login.js';
 import { ErrorResponse } from '../../../../../core/models/response/error-response.js';
+import { UserDataService } from '../../../application/services/user-data.service.js';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +24,8 @@ import { ErrorResponse } from '../../../../../core/models/response/error-respons
 })
 export class LoginComponent implements OnInit, OnDestroy {
   private authService = inject(AuthService);
+  private userDataService = inject(UserDataService);
+  private router = inject(Router);
   private destroy$ = new Subject<void>();
   isLoading: WritableSignal<boolean> = signal(false);
   err: WritableSignal<boolean> = signal(false);
@@ -52,6 +55,11 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.err.set(false);
             this.isLoading.set(false);
             console.log(res);
+            this.userDataService.setUserData({
+              token: res.token,
+              user: { email: res.user.email, username: res.user.username, role: res.user.role },
+            });
+            this.router.navigate(['/main']);
           },
           error: (err: ErrorResponse) => {
             this.err.set(true);
