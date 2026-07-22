@@ -15,6 +15,7 @@ import { SharedBtnComponent } from '../../../../../shared/components/shared-btn/
 import { ErrorResponse } from '../../../../../core/models/response/error-response.js';
 import { AlertComponent } from '../../../../../shared/components/alert/alert.component';
 import { Login } from '../../../domain/models/response/login.js';
+import { UserDataService } from '../../../application/services/user-data.service.js';
 
 @Component({
   selector: 'app-create-account',
@@ -31,6 +32,7 @@ import { Login } from '../../../domain/models/response/login.js';
 })
 export class CreateAccountComponent implements OnInit {
   private authService = inject(AuthService);
+  private userDataService = inject(UserDataService);
   private router = inject(Router);
   private destroy$ = new Subject<void>();
   isLoading: WritableSignal<boolean> = signal(false);
@@ -115,6 +117,7 @@ export class CreateAccountComponent implements OnInit {
             this.err.set(false);
             this.isLoading.set(false);
             console.log(res);
+            // this.userDataService.setUserData({token: res.token,user:{email: res.user.email,username: res.user.username,role: res.user.role}})
           },
           error: (err: ErrorResponse) => {
             this.err.set(true);
