@@ -14,6 +14,7 @@ import { Router, RouterLink } from '@angular/router';
 import { SharedBtnComponent } from '../../../../../shared/components/shared-btn/shared-btn.component';
 import { ErrorResponse } from '../../../../../core/models/response/error-response.js';
 import { AlertComponent } from '../../../../../shared/components/alert/alert.component';
+import { Login } from '../../../domain/models/response/login.js';
 
 @Component({
   selector: 'app-create-account',
@@ -105,8 +106,21 @@ export class CreateAccountComponent implements OnInit {
   register() {
     if (this.registerForm.valid) {
       console.log(this.registerForm.value);
-
-      // call register endPoint
+      this.isLoading.set(true);
+      this.authService
+        .register(this.registerForm.getRawValue())
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (res: Login) => {
+            this.err.set(false);
+            this.isLoading.set(false);
+            console.log(res);
+          },
+          error: (err: ErrorResponse) => {
+            this.err.set(true);
+            this.isLoading.set(false);
+          },
+        });
     } else {
       this.passwordController.markAsTouched();
       this.confirmPasswordController.markAsTouched();
@@ -127,25 +141,38 @@ export class CreateAccountComponent implements OnInit {
         this.emailController.markAsTouched();
       } else {
         // call send email end point
-        this.isLoading.set(true);
-        console.log(this.emailController.value);
         this.authService
-          .sendEmailVerification(this.emailController.value)
+          .sendEmailVerification({ email: this.emailController.value })
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: (res: { message: string; code: string }) => {
+              console.log(res);
               this.err.set(false);
               this.step.set(this.step() + 1);
             },
             error: (err: ErrorResponse) => {
               this.err.set(true);
+              console.log(err);
             },
           });
       }
     } else if (this.step() === 2) {
       if (this.otpForm.valid) {
-        // call confirm email
-        this.step.set(this.step() + 1);
+        const value = Object.values(this.otpForm.value).join('');
+        this.authService
+          .confirmEmail({ email: this.emailController.value, code: value })
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: (res: { message: string }) => {
+              console.log(res);
+              this.err.set(false);
+              this.step.set(this.step() + 1);
+            },
+            error: (err: any) => {
+              console.log(err);
+              this.err.set(true);
+            },
+          });
       } else {
         this.otpForm.markAllAsTouched();
       }
@@ -161,7 +188,6 @@ export class CreateAccountComponent implements OnInit {
         this.phoneController.markAsTouched();
         this.userNameController.markAsTouched();
       } else {
-        // call confirm email
         this.step.set(this.step() + 1);
       }
     }

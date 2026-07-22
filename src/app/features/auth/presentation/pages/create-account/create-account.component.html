@@ -232,10 +232,15 @@
           }
         </div>
 
+        @if (err()) {
+          <app-alert mess="Something went wrong"></app-alert>
+        }
+
         <!-- Submit Form -->
         <button
           type="submit"
-          class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center transition-colors"
+          [disabled]="this.isLoading()"
+          class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center transition-colors disabled:opacity-50"
         >
           Create Account
         </button>
@@ -308,7 +313,9 @@
         @if (otpForm.touched && otpForm.invalid) {
           <app-error-mess mess="Please enter a valid 6-digit code"></app-error-mess>
         }
-
+        @if (err()) {
+          <app-alert mess="Something went wrong"></app-alert>
+        }
         <app-shared-btn mess="Verify Code" (onBtnClicked)="increaseStep()"></app-shared-btn>
       </form>
     }
