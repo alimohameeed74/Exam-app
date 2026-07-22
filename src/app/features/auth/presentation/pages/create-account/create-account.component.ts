@@ -16,6 +16,7 @@ import { ErrorResponse } from '../../../../../core/models/response/error-respons
 import { AlertComponent } from '../../../../../shared/components/alert/alert.component';
 import { Login } from '../../../domain/models/response/login.js';
 import { UserDataService } from '../../../application/services/user-data.service.js';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-account',
@@ -34,10 +35,10 @@ export class CreateAccountComponent implements OnInit {
   private authService = inject(AuthService);
   private userDataService = inject(UserDataService);
   private router = inject(Router);
+  private toasterService = inject(ToastrService);
   private destroy$ = new Subject<void>();
   isLoading: WritableSignal<boolean> = signal(false);
   err: WritableSignal<boolean> = signal(false);
-  step3Submitted: WritableSignal<boolean> = signal(false);
   step: WritableSignal<number> = signal(1);
   private fb = inject(FormBuilder);
   registerForm = this.fb.nonNullable.group(
@@ -121,6 +122,7 @@ export class CreateAccountComponent implements OnInit {
               token: res.token,
               user: { email: res.user.email, username: res.user.username, role: res.user.role },
             });
+            this.toasterService.success('Signedup Successfully', 'Success');
             this.router.navigate(['/main']);
           },
           error: (err: ErrorResponse) => {
@@ -154,6 +156,7 @@ export class CreateAccountComponent implements OnInit {
           .subscribe({
             next: (res: { message: string; code: string }) => {
               console.log(res);
+              this.toasterService.success(res.message, 'Success');
               this.err.set(false);
               this.step.set(this.step() + 1);
             },
@@ -173,6 +176,7 @@ export class CreateAccountComponent implements OnInit {
             next: (res: { message: string }) => {
               console.log(res);
               this.err.set(false);
+              this.toasterService.success(res.message, 'Success');
               this.step.set(this.step() + 1);
             },
             error: (err: any) => {
