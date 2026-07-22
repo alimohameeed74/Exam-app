@@ -7,11 +7,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from 'auth-lib';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { SharedInputComponent } from '../../../../../shared/components/shared-input/shared-input.component';
 import { ErrorMessComponent } from '../../../../../shared/components/error-mess/error-mess.component';
 import { Router, RouterLink } from '@angular/router';
 import { SharedBtnComponent } from '../../../../../shared/components/shared-btn/shared-btn.component';
+import { ErrorResponse } from '../../../../../core/models/response/error-response.js';
+import { AlertComponent } from '../../../../../shared/components/alert/alert.component';
 
 @Component({
   selector: 'app-create-account',
@@ -23,6 +25,7 @@ import { SharedBtnComponent } from '../../../../../shared/components/shared-btn/
     ErrorMessComponent,
     RouterLink,
     SharedBtnComponent,
+    AlertComponent,
   ],
 })
 export class CreateAccountComponent implements OnInit {
@@ -124,7 +127,20 @@ export class CreateAccountComponent implements OnInit {
         this.emailController.markAsTouched();
       } else {
         // call send email end point
-        this.step.set(this.step() + 1);
+        this.isLoading.set(true);
+        console.log(this.emailController.value);
+        this.authService
+          .sendEmailVerification(this.emailController.value)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: (res: { message: string; code: string }) => {
+              this.err.set(false);
+              this.step.set(this.step() + 1);
+            },
+            error: (err: ErrorResponse) => {
+              this.err.set(true);
+            },
+          });
       }
     } else if (this.step() === 2) {
       if (this.otpForm.valid) {

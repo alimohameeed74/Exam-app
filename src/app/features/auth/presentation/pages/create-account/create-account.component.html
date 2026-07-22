@@ -95,6 +95,9 @@
             }
           }
         </div>
+        @if (err()) {
+          <app-alert mess="Something went wrong"></app-alert>
+        }
         <app-shared-btn mess="Next" (onBtnClicked)="increaseStep()"></app-shared-btn>
       }
 
