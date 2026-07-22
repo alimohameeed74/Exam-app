@@ -1,10 +1,12 @@
 import { AuthService } from '../../../../../../../dist/auth-lib/';
-import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { SharedInputComponent } from '../../../../../shared/components/shared-input/shared-input.component';
 import { ErrorMessComponent } from '../../../../../shared/components/error-mess/error-mess.component';
 import { AlertComponent } from '../../../../../shared/components/alert/alert.component';
 import { RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
+import { Login } from '../../../domain/models/response/login.js';
 
 @Component({
   selector: 'app-login',
@@ -18,8 +20,9 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
     ReactiveFormsModule,
   ],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   private authService = inject(AuthService);
+  private destroy$ = new Subject<void>();
   isLoading: WritableSignal<boolean> = signal(false);
   err: WritableSignal<boolean> = signal(false);
   private fb = inject(FormBuilder);
@@ -40,18 +43,21 @@ export class LoginComponent implements OnInit {
   login() {
     if (this.loginForm.valid) {
       this.isLoading.set(true);
-      this.authService.login(this.loginForm.getRawValue()).subscribe({
-        next: (res: any) => {
-          this.err.set(false);
-          this.isLoading.set(false);
-          console.log(res);
-        },
-        error: (err: any) => {
-          this.err.set(true);
-          this.isLoading.set(false);
-          console.log(err);
-        },
-      });
+      this.authService
+        .login(this.loginForm.getRawValue())
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (res: Login) => {
+            this.err.set(false);
+            this.isLoading.set(false);
+            console.log(res);
+          },
+          error: (err: any) => {
+            this.err.set(true);
+            this.isLoading.set(false);
+            console.log(err);
+          },
+        });
     } else {
       this.loginForm.markAllAsTouched();
     }
@@ -62,5 +68,8 @@ export class LoginComponent implements OnInit {
   }
   get passwordController() {
     return this.loginForm.controls.password;
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
   }
 }
