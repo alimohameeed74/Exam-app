@@ -121,6 +121,7 @@ export class CreateAccountComponent implements OnInit {
               token: res.token,
               user: { email: res.user.email, username: res.user.username, role: res.user.role },
             });
+            this.router.navigate(['/main']);
           },
           error: (err: ErrorResponse) => {
             this.err.set(true);
