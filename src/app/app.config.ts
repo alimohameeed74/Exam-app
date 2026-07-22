@@ -7,9 +7,10 @@ import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/
 import { authInterceptor } from './core/interceptors/auth/auth.interceptor.js';
 import { retryInterceptor } from './core/interceptors/retry/retry.interceptor.js';
 import { errorInterceptor } from './core/interceptors/error/error.interceptor.js';
-
+import { provideToastr } from 'ngx-toastr';
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideToastr(),
     provideHttpClient(
       withFetch(),
       withInterceptors([authInterceptor, retryInterceptor, errorInterceptor]),
