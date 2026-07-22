@@ -11,12 +11,19 @@ import { Subject } from 'rxjs';
 import { SharedInputComponent } from '../../../../../shared/components/shared-input/shared-input.component';
 import { ErrorMessComponent } from '../../../../../shared/components/error-mess/error-mess.component';
 import { RouterLink } from '@angular/router';
+import { SharedBtnComponent } from '../../../../../shared/components/shared-btn/shared-btn.component';
 
 @Component({
   selector: 'app-create-account',
   templateUrl: './create-account.component.html',
   styleUrls: ['./create-account.component.css'],
-  imports: [ReactiveFormsModule, SharedInputComponent, ErrorMessComponent, RouterLink],
+  imports: [
+    ReactiveFormsModule,
+    SharedInputComponent,
+    ErrorMessComponent,
+    RouterLink,
+    SharedBtnComponent,
+  ],
 })
 export class CreateAccountComponent implements OnInit {
   private authService = inject(AuthService);
@@ -82,7 +89,9 @@ export class CreateAccountComponent implements OnInit {
   get phoneController() {
     return this.registerForm.controls.phone;
   }
-  register() {}
+  register() {
+    console.log(this.registerForm.value);
+  }
 
   passwordMatchValidator(form: AbstractControl): ValidationErrors | null {
     const password = form.get('password')?.value;
@@ -92,7 +101,10 @@ export class CreateAccountComponent implements OnInit {
   }
 
   increaseStep() {
-    this.step.update((v) => v++);
+    this.step.set(this.step() + 1);
+  }
+  decreaseStep() {
+    this.step.set(this.step() - 1);
   }
   ngOnDestroy(): void {
     this.destroy$.next();
