@@ -23,7 +23,7 @@ export class AuthService extends AuthApi {
   sendEmailVerification(email: string): Observable<{ message: string; code: string }> {
     return this.httpClient.post<{ message: string; code: string }>(
       AuthEndPoint.SEND_EMAIL_VERIFICATION,
-      email,
+      { email },
     );
   }
   confirmEmail(data: { email: string; code: string }): Observable<{ message: string }> {
