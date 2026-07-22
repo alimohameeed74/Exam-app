@@ -10,7 +10,7 @@ import { AuthService } from 'auth-lib';
 import { Subject } from 'rxjs';
 import { SharedInputComponent } from '../../../../../shared/components/shared-input/shared-input.component';
 import { ErrorMessComponent } from '../../../../../shared/components/error-mess/error-mess.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { SharedBtnComponent } from '../../../../../shared/components/shared-btn/shared-btn.component';
 
 @Component({
@@ -27,9 +27,11 @@ import { SharedBtnComponent } from '../../../../../shared/components/shared-btn/
 })
 export class CreateAccountComponent implements OnInit {
   private authService = inject(AuthService);
+  private router = inject(Router);
   private destroy$ = new Subject<void>();
   isLoading: WritableSignal<boolean> = signal(false);
   err: WritableSignal<boolean> = signal(false);
+  step3Submitted: WritableSignal<boolean> = signal(false);
   step: WritableSignal<number> = signal(1);
   private fb = inject(FormBuilder);
   registerForm = this.fb.nonNullable.group(
@@ -48,9 +50,9 @@ export class CreateAccountComponent implements OnInit {
 
       confirmPassword: ['', [Validators.required]],
 
-      firstName: ['', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]],
+      firstName: ['', [Validators.required, Validators.pattern(/^[A-Za-z][A-Za-z]+$/)]],
 
-      lastName: ['', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]],
+      lastName: ['', [Validators.required, Validators.pattern(/^[A-Za-z][A-Za-z]+$/)]],
 
       phone: ['', [Validators.required, Validators.pattern(/^01[0125][0-9]{8}$/)]],
     },
@@ -58,6 +60,14 @@ export class CreateAccountComponent implements OnInit {
       validators: this.passwordMatchValidator,
     },
   );
+  otpForm = this.fb.group({
+    digit1: ['', [Validators.required, Validators.pattern('[0-9]')]],
+    digit2: ['', [Validators.required, Validators.pattern('[0-9]')]],
+    digit3: ['', [Validators.required, Validators.pattern('[0-9]')]],
+    digit4: ['', [Validators.required, Validators.pattern('[0-9]')]],
+    digit5: ['', [Validators.required, Validators.pattern('[0-9]')]],
+    digit6: ['', [Validators.required, Validators.pattern('[0-9]')]],
+  });
   constructor() {}
 
   ngOnInit() {}
@@ -90,7 +100,14 @@ export class CreateAccountComponent implements OnInit {
     return this.registerForm.controls.phone;
   }
   register() {
-    console.log(this.registerForm.value);
+    if (this.registerForm.valid) {
+      console.log(this.registerForm.value);
+
+      // call register endPoint
+    } else {
+      this.passwordController.markAsTouched();
+      this.confirmPasswordController.markAsTouched();
+    }
   }
 
   passwordMatchValidator(form: AbstractControl): ValidationErrors | null {
@@ -101,7 +118,37 @@ export class CreateAccountComponent implements OnInit {
   }
 
   increaseStep() {
-    this.step.set(this.step() + 1);
+    console.log(this.step());
+    if (this.step() === 1) {
+      if (this.emailController.invalid) {
+        this.emailController.markAsTouched();
+      } else {
+        // call send email end point
+        this.step.set(this.step() + 1);
+      }
+    } else if (this.step() === 2) {
+      if (this.otpForm.valid) {
+        // call confirm email
+        this.step.set(this.step() + 1);
+      } else {
+        this.otpForm.markAllAsTouched();
+      }
+    } else if (this.step() === 3) {
+      if (
+        this.firstNameController.invalid ||
+        this.lastNameController.invalid ||
+        this.userNameController.invalid ||
+        this.phoneController.invalid
+      ) {
+        this.firstNameController.markAsTouched();
+        this.lastNameController.markAsTouched();
+        this.phoneController.markAsTouched();
+        this.userNameController.markAsTouched();
+      } else {
+        // call confirm email
+        this.step.set(this.step() + 1);
+      }
+    }
   }
   decreaseStep() {
     this.step.set(this.step() - 1);

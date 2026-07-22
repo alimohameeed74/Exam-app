@@ -241,57 +241,58 @@
 
     <!-- OTP Form -->
     @if (step() === 2) {
-      <form>
+      <form [formGroup]="otpForm">
         <fieldset class="w-full">
           <legend class="sr-only">6-digit verification code</legend>
+
           <div class="flex gap-2 justify-center mb-4" role="group">
-            <label for="otp-1" class="sr-only">Digit 1</label>
             <input
+              formControlName="digit1"
               id="otp-1"
               type="text"
               inputmode="numeric"
               maxlength="1"
-              value="1"
               class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
             />
-            <label for="otp-2" class="sr-only">Digit 2</label>
+
             <input
+              formControlName="digit2"
               id="otp-2"
               type="text"
               inputmode="numeric"
               maxlength="1"
-              value="2"
               class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
             />
-            <label for="otp-3" class="sr-only">Digit 3</label>
+
             <input
+              formControlName="digit3"
               id="otp-3"
               type="text"
               inputmode="numeric"
               maxlength="1"
-              value="3"
               class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
             />
-            <label for="otp-4" class="sr-only">Digit 4</label>
+
             <input
+              formControlName="digit4"
               id="otp-4"
               type="text"
               inputmode="numeric"
               maxlength="1"
-              value="4"
               class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
             />
-            <label for="otp-5" class="sr-only">Digit 5</label>
+
             <input
+              formControlName="digit5"
               id="otp-5"
               type="text"
               inputmode="numeric"
               maxlength="1"
-              value="5"
-              class="w-9 h-9 text-center text-[12px] border-2 border-blue-500 rounded-sm ring-2 ring-blue-100"
+              class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
             />
-            <label for="otp-6" class="sr-only">Digit 6</label>
+
             <input
+              formControlName="digit6"
               id="otp-6"
               type="text"
               inputmode="numeric"
@@ -301,13 +302,15 @@
           </div>
         </fieldset>
 
-        <p class="text-center text-sm text-gray-500 font-geist mb-4">
-          You can request another code in: <span id="otp-timer">60s</span>
-        </p>
+        @if (otpForm.touched && otpForm.invalid) {
+          <app-error-mess mess="Please enter a valid 6-digit code"></app-error-mess>
+        }
 
         <app-shared-btn mess="Verify Code" (onBtnClicked)="increaseStep()"></app-shared-btn>
       </form>
     }
+
+    <!-- Statement -->
     @if (step() === 1) {
       <p class="text-center text-sm text-gray-600 mt-6 font-geist">
         Already have an account?
