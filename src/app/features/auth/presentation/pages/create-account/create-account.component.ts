@@ -117,7 +117,10 @@ export class CreateAccountComponent implements OnInit {
             this.err.set(false);
             this.isLoading.set(false);
             console.log(res);
-            // this.userDataService.setUserData({token: res.token,user:{email: res.user.email,username: res.user.username,role: res.user.role}})
+            this.userDataService.setUserData({
+              token: res.token,
+              user: { email: res.user.email, username: res.user.username, role: res.user.role },
+            });
           },
           error: (err: ErrorResponse) => {
             this.err.set(true);
