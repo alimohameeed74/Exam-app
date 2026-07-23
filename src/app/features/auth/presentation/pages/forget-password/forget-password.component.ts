@@ -2,7 +2,13 @@ import { ErrorResponse } from './../../../../../core/models/response/error-respo
 import { Component, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SharedInputComponent } from '../../../../../shared/components/shared-input/shared-input.component';
-import { AbstractControl, FormBuilder, ValidationErrors, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'auth-lib';
@@ -12,7 +18,7 @@ import { AlertComponent } from '../../../../../shared/components/alert/alert.com
   selector: 'app-forget-password',
   templateUrl: './forget-password.component.html',
   styleUrls: ['./forget-password.component.css'],
-  imports: [RouterLink, SharedInputComponent, AlertComponent],
+  imports: [RouterLink, SharedInputComponent, AlertComponent, ReactiveFormsModule],
 })
 export class ForgetPasswordComponent implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
@@ -41,16 +47,18 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
   increaseStep() {
     if (this.step() === 1) {
       // call forgetPasseod endPoint
-      console.log(this.emailForm.value);
+
       this.isLoading.set(true);
       this.authService
         .forgetPassword(this.emailForm.getRawValue())
         .pipe(takeUntil(this.destroy$))
         .subscribe({
-          next: (res: any) => {
+          next: (res: { status: boolean; code: number; message: string }) => {
             this.err.set(false);
             this.isLoading.set(false);
             console.log(res);
+            this.toaster.success(res.message, 'Success');
+            // this.step.set(this.step() + 1);
           },
           error: (err: ErrorResponse) => {
             this.err.set(true);
@@ -63,7 +71,6 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
     } else if (this.step() === 3) {
       // call resetPassword Endpoint
     }
-    this.step.set(this.step() + 1);
   }
 
   get emailController() {
