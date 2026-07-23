@@ -9,6 +9,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { Login } from '../../../domain/models/response/login.js';
 import { ErrorResponse } from '../../../../../core/models/response/error-response.js';
 import { UserDataService } from '../../../application/services/user-data.service.js';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private authService = inject(AuthService);
   private userDataService = inject(UserDataService);
   private router = inject(Router);
+  private toaster = inject(ToastrService);
   private destroy$ = new Subject<void>();
   isLoading: WritableSignal<boolean> = signal(false);
   err: WritableSignal<boolean> = signal(false);
@@ -59,6 +61,7 @@ export class LoginComponent implements OnInit, OnDestroy {
               token: res.token,
               user: { email: res.user.email, username: res.user.username, role: res.user.role },
             });
+            this.toaster.success('Signedin Successfully', 'Success');
             this.router.navigate(['/main']);
           },
           error: (err: ErrorResponse) => {
