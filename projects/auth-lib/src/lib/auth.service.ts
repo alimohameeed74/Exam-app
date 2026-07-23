@@ -22,7 +22,7 @@ export class AuthService extends AuthApi {
       .post<ApiResponse<Login>>(AuthEndPoint.REGISTER, data)
       .pipe(map((res) => res.payload));
   }
-  forgetPassword(data: { email: string; redirectUrl: string }): Observable<any> {
+  forgetPassword(data: { email: string }): Observable<any> {
     return this.httpClient.post(AuthEndPoint.FORGET_PASSWORD, data);
   }
   sendEmailVerification(data: { email: string }): Observable<{ message: string; code: string }> {
