@@ -24,7 +24,6 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
   step: WritableSignal<number> = signal(1);
   emailForm = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
-    redirectUrl: ['/auth'],
   });
   passwordsForm = this.fb.group(
     {
