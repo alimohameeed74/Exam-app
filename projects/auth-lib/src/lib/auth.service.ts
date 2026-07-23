@@ -43,7 +43,10 @@ export class AuthService extends AuthApi {
     token: string;
     newPassword: string;
     confirmPassword: string;
-  }): Observable<any> {
-    return this.httpClient.post(AuthEndPoint.RESET_PASSWORD, data);
+  }): Observable<{ status: boolean; code: number; message: string }> {
+    return this.httpClient.post<{ status: boolean; code: number; message: string }>(
+      AuthEndPoint.RESET_PASSWORD,
+      data,
+    );
   }
 }
