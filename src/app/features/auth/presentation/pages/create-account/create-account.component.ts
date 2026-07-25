@@ -108,7 +108,6 @@ export class CreateAccountComponent implements OnInit {
   }
   register() {
     if (this.registerForm.valid) {
-      console.log(this.registerForm.value);
       this.isLoading.set(true);
       this.authService
         .register(this.registerForm.getRawValue())
@@ -117,7 +116,6 @@ export class CreateAccountComponent implements OnInit {
           next: (res: Login) => {
             this.err.set(false);
             this.isLoading.set(false);
-            console.log(res);
             this.userDataService.setUserData({
               token: res.token,
               user: { email: res.user.email, username: res.user.username, role: res.user.role },
@@ -144,7 +142,6 @@ export class CreateAccountComponent implements OnInit {
   }
 
   increaseStep() {
-    console.log(this.step());
     if (this.step() === 1) {
       if (this.emailController.invalid) {
         this.emailController.markAsTouched();
@@ -155,32 +152,29 @@ export class CreateAccountComponent implements OnInit {
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: (res: { message: string; code: string }) => {
-              console.log(res);
               this.toasterService.success(res.message, 'Success');
               this.err.set(false);
               this.step.set(this.step() + 1);
             },
             error: (err: ErrorResponse) => {
               this.err.set(true);
-              console.log(err);
             },
           });
       }
     } else if (this.step() === 2) {
       if (this.otpForm.valid) {
         const value = Object.values(this.otpForm.value).join('');
+        // call confirm email end point
         this.authService
           .confirmEmail({ email: this.emailController.value, code: value })
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: (res: { message: string }) => {
-              console.log(res);
               this.err.set(false);
               this.toasterService.success(res.message, 'Success');
               this.step.set(this.step() + 1);
             },
             error: (err: any) => {
-              console.log(err);
               this.err.set(true);
             },
           });
