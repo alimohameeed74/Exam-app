@@ -26,8 +26,8 @@ import { ToastrService } from 'ngx-toastr';
 export class LoginComponent implements OnInit, OnDestroy {
   private authService = inject(AuthService);
   private userDataService = inject(UserDataService);
-  private router = inject(Router);
   private toaster = inject(ToastrService);
+  private router = inject(Router);
   private destroy$ = new Subject<void>();
   isLoading: WritableSignal<boolean> = signal(false);
   err: WritableSignal<boolean> = signal(false);
@@ -56,18 +56,18 @@ export class LoginComponent implements OnInit, OnDestroy {
           next: (res: Login) => {
             this.err.set(false);
             this.isLoading.set(false);
-            console.log(res);
             this.userDataService.setUserData({
               token: res.token,
               user: { email: res.user.email, username: res.user.username, role: res.user.role },
             });
-            this.toaster.success('Signedin Successfully', 'Success');
+
+            this.toaster.success('Signedin successfully', 'Success');
+
             this.router.navigate(['/main']);
           },
           error: (err: ErrorResponse) => {
             this.err.set(true);
             this.isLoading.set(false);
-            console.log(err);
           },
         });
     } else {
