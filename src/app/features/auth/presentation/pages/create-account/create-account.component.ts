@@ -55,7 +55,7 @@ export class CreateAccountComponent implements OnInit {
         ],
       ],
 
-      confirmPassword: ['', [Validators.required]],
+      confirmPassword: [''],
 
       firstName: ['', [Validators.required, Validators.pattern(/^[A-Za-z][A-Za-z]+$/)]],
 
