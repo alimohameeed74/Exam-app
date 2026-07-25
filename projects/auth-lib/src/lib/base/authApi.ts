@@ -5,12 +5,14 @@ import { Login } from '../models/response/login.js';
 export abstract class AuthApi {
   abstract login(data: { username: string; password: string }): Observable<Login>;
   abstract register(data: Register): Observable<Login>;
-  abstract forgetPassword(data: { email: string; redirectUrl: string }): Observable<any>;
+  abstract forgetPassword(data: {
+    email: string;
+  }): Observable<{ status: boolean; code: number; message: string }>;
   abstract resetPassword(data: {
     token: string;
     newPassword: string;
     confirmPassword: string;
-  }): Observable<any>;
+  }): Observable<{ status: boolean; code: number; message: string }>;
   abstract confirmEmail(data: { email: string; code: string }): Observable<{ message: string }>;
   abstract sendEmailVerification(data: {
     email: string;

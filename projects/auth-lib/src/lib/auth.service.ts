@@ -22,8 +22,13 @@ export class AuthService extends AuthApi {
       .post<ApiResponse<Login>>(AuthEndPoint.REGISTER, data)
       .pipe(map((res) => res.payload));
   }
-  forgetPassword(data: { email: string; redirectUrl: string }): Observable<any> {
-    return this.httpClient.post(AuthEndPoint.FORGET_PASSWORD, data);
+  forgetPassword(data: {
+    email: string;
+  }): Observable<{ status: boolean; code: number; message: string }> {
+    return this.httpClient.post<{ status: boolean; code: number; message: string }>(
+      AuthEndPoint.FORGET_PASSWORD,
+      data,
+    );
   }
   sendEmailVerification(data: { email: string }): Observable<{ message: string; code: string }> {
     return this.httpClient.post<{ message: string; code: string }>(
@@ -38,7 +43,10 @@ export class AuthService extends AuthApi {
     token: string;
     newPassword: string;
     confirmPassword: string;
-  }): Observable<any> {
-    return this.httpClient.post(AuthEndPoint.RESET_PASSWORD, data);
+  }): Observable<{ status: boolean; code: number; message: string }> {
+    return this.httpClient.post<{ status: boolean; code: number; message: string }>(
+      AuthEndPoint.RESET_PASSWORD,
+      data,
+    );
   }
 }
