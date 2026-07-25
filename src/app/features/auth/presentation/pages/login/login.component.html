@@ -20,7 +20,7 @@
   <div>
     <app-shared-input
       [control]="userNameController"
-      [obj]="{ id: 'username', label: 'Username', type: 'text', placeHolder: 'user123' }"
+      [obj]="{ id: 'username', label: 'Username:', type: 'text', placeHolder: 'user123' }"
     ></app-shared-input>
     @if (userNameController.touched && userNameController.errors) {
       @if (userNameController.hasError('required')) {
@@ -35,7 +35,7 @@
   <div>
     <app-shared-input
       [control]="passwordController"
-      [obj]="{ id: 'password', label: 'Password', type: 'password', placeHolder: '•••••••' }"
+      [obj]="{ id: 'password', label: 'Password:', type: 'password', placeHolder: '•••••••' }"
     ></app-shared-input>
     @if (passwordController.touched && passwordController.errors) {
       @if (passwordController.hasError('required')) {
