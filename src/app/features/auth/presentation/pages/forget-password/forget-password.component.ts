@@ -73,7 +73,6 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
   }
 
   increaseStep() {
-    console.log(this.step());
     if (this.step() === 1) {
       // call forgetPassword endPoint
       if (this.emailForm.valid) {
@@ -85,14 +84,12 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
             next: (res: { status: boolean; code: number; message: string }) => {
               this.err.set(false);
               this.isLoading.set(false);
-              console.log(res);
               this.toaster.success(res.message, 'Success');
               this.step.set(this.step() + 1);
             },
             error: (err: ErrorResponse) => {
               this.err.set(true);
               this.isLoading.set(false);
-              console.log(err);
             },
           });
       } else {
@@ -148,6 +145,7 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
       newPassword: '',
       confirmPassword: '',
     });
+    this.step.set(this.step() - 1);
   }
   ngOnDestroy(): void {
     this.destroy$.next();
