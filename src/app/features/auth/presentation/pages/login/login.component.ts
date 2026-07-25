@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit, OnDestroy {
               user: { email: res.user.email, username: res.user.username, role: res.user.role },
             });
 
-            this.toaster.success('Signedin successfuly', 'Success');
+            this.toaster.success('Signedin successfully', 'Success');
 
             this.router.navigate(['/main']);
           },
