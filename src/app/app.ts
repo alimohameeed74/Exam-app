@@ -1,10 +1,10 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { UserDataService } from './features/auth/application/services/user-data.service.js';
-
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, NgxSpinnerModule],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

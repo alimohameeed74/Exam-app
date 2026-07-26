@@ -1,19 +1,15 @@
 import { ErrorResponse } from './../../../../../core/models/response/error-response';
-import { Component, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SharedInputComponent } from '../../../../../shared/components/shared-input/shared-input.component';
-import {
-  AbstractControl,
-  FormBuilder,
-  ReactiveFormsModule,
-  ValidationErrors,
-  Validators,
-} from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'auth-lib';
 import { AlertComponent } from '../../../../../shared/components/alert/alert.component';
 import { ErrorMessComponent } from '../../../../../shared/components/error-mess/error-mess.component';
+import { matchFieldsValidator } from '../../../../../shared/validators/match-fileds.validator.js';
+import { REGEX_PATTERNS } from '../../../../../core/consts/regex.js';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-forget-password',
@@ -27,14 +23,13 @@ import { ErrorMessComponent } from '../../../../../shared/components/error-mess/
     ErrorMessComponent,
   ],
 })
-export class ForgetPasswordComponent implements OnInit, OnDestroy {
+export class ForgetPasswordComponent implements OnInit {
   private fb = inject(FormBuilder);
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private toaster = inject(ToastrService);
   private authService = inject(AuthService);
-  private destroy$ = new Subject<void>();
-  isLoading: WritableSignal<boolean> = signal(false);
+  private destroyRef = inject(DestroyRef);
   err: WritableSignal<boolean> = signal(false);
   step: WritableSignal<number> = signal(1);
   emailForm = this.fb.nonNullable.group({
@@ -43,17 +38,11 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
   passwordsForm = this.fb.nonNullable.group(
     {
       token: [''],
-      newPassword: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{5,}$/),
-        ],
-      ],
+      newPassword: ['', [Validators.required, Validators.pattern(REGEX_PATTERNS.PASSWORD_PATTERN)]],
       confirmPassword: [''],
     },
     {
-      validators: [this.passwordMatchValidator],
+      validators: matchFieldsValidator('newPassword', 'confirmPassword'),
     },
   );
   constructor() {}
@@ -76,20 +65,17 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
     if (this.step() === 1) {
       // call forgetPassword endPoint
       if (this.emailForm.valid) {
-        this.isLoading.set(true);
         this.authService
           .forgetPassword(this.emailForm.getRawValue())
-          .pipe(takeUntil(this.destroy$))
+          .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
             next: (res: { status: boolean; code: number; message: string }) => {
               this.err.set(false);
-              this.isLoading.set(false);
               this.toaster.success(res.message, 'Success');
               this.step.set(this.step() + 1);
             },
             error: (err: ErrorResponse) => {
               this.err.set(true);
-              this.isLoading.set(false);
             },
           });
       } else {
@@ -98,20 +84,17 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
     } else if (this.step() === 3) {
       // call resetPassword Endpoint
       if (this.passwordsForm.valid) {
-        this.isLoading.set(true);
         this.authService
           .resetPassword(this.passwordsForm.getRawValue())
-          .pipe(takeUntil(this.destroy$))
+          .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
             next: (res: { status: boolean; code: number; message: string }) => {
               this.err.set(false);
-              this.isLoading.set(false);
               this.toaster.success(res.message, 'Success');
               this.router.navigate(['/auth/signin']);
             },
             error: (err: ErrorResponse) => {
               this.err.set(true);
-              this.isLoading.set(false);
             },
           });
       } else {
@@ -130,12 +113,6 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
     return this.passwordsForm.controls.confirmPassword;
   }
 
-  passwordMatchValidator(form: AbstractControl): ValidationErrors | null {
-    const newPassword = form.get('newPassword')?.value;
-    const confirmPassword = form.get('confirmPassword')?.value;
-
-    return newPassword === confirmPassword ? null : { passwordMismatch: true };
-  }
   decreaseStep() {
     this.emailForm.reset({
       email: '',
@@ -146,8 +123,5 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
       confirmPassword: '',
     });
     this.step.set(this.step() - 1);
-  }
-  ngOnDestroy(): void {
-    this.destroy$.next();
   }
 }

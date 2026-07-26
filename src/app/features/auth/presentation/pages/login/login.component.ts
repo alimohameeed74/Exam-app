@@ -1,15 +1,16 @@
 import { AuthService } from 'auth-lib';
-import { Component, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { SharedInputComponent } from '../../../../../shared/components/shared-input/shared-input.component';
 import { ErrorMessComponent } from '../../../../../shared/components/error-mess/error-mess.component';
 import { AlertComponent } from '../../../../../shared/components/alert/alert.component';
 import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
 import { Login } from '../../../domain/models/response/login.js';
 import { ErrorResponse } from '../../../../../core/models/response/error-response.js';
 import { UserDataService } from '../../../application/services/user-data.service.js';
 import { ToastrService } from 'ngx-toastr';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { REGEX_PATTERNS } from '../../../../../core/consts/regex.js';
 
 @Component({
   selector: 'app-login',
@@ -23,24 +24,17 @@ import { ToastrService } from 'ngx-toastr';
     ReactiveFormsModule,
   ],
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
   private authService = inject(AuthService);
   private userDataService = inject(UserDataService);
   private toaster = inject(ToastrService);
+  private destroyRef = inject(DestroyRef);
   private router = inject(Router);
-  private destroy$ = new Subject<void>();
-  isLoading: WritableSignal<boolean> = signal(false);
   err: WritableSignal<boolean> = signal(false);
   private fb = inject(FormBuilder);
   loginForm = this.fb.nonNullable.group({
-    username: ['', [Validators.required, Validators.pattern(/^[a-zA-z][a-zA-z0-9]{3,}$/)]],
-    password: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{5,}$/),
-      ],
-    ],
+    username: ['', [Validators.required, Validators.pattern(REGEX_PATTERNS.USERNAME_PATTERN)]],
+    password: ['', [Validators.required, Validators.pattern(REGEX_PATTERNS.PASSWORD_PATTERN)]],
   });
   constructor() {}
 
@@ -48,26 +42,21 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   login() {
     if (this.loginForm.valid) {
-      this.isLoading.set(true);
       this.authService
         .login(this.loginForm.getRawValue())
-        .pipe(takeUntil(this.destroy$))
+        .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: (res: Login) => {
             this.err.set(false);
-            this.isLoading.set(false);
             this.userDataService.setUserData({
               token: res.token,
               user: { email: res.user.email, username: res.user.username, role: res.user.role },
             });
-
             this.toaster.success('Signedin successfully', 'Success');
-
             this.router.navigate(['/main']);
           },
           error: (err: ErrorResponse) => {
             this.err.set(true);
-            this.isLoading.set(false);
           },
         });
     } else {
@@ -80,8 +69,5 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
   get passwordController() {
     return this.loginForm.controls.password;
-  }
-  ngOnDestroy(): void {
-    this.destroy$.next();
   }
 }

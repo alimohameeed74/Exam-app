@@ -8,12 +8,13 @@ import { authInterceptor } from './core/interceptors/auth/auth.interceptor.js';
 import { retryInterceptor } from './core/interceptors/retry/retry.interceptor.js';
 import { errorInterceptor } from './core/interceptors/error/error.interceptor.js';
 import { provideToastr } from 'ngx-toastr';
+import { loadingInterceptor } from './core/interceptors/loading/loading.interceptor.js';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideToastr(),
     provideHttpClient(
       withFetch(),
-      withInterceptors([authInterceptor, retryInterceptor, errorInterceptor]),
+      withInterceptors([authInterceptor, retryInterceptor, errorInterceptor, loadingInterceptor]),
     ),
     provideBrowserGlobalErrorListeners(),
     provideRouter(

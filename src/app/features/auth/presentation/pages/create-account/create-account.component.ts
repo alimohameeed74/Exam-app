@@ -1,13 +1,6 @@
-import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  ReactiveFormsModule,
-  ValidationErrors,
-  Validators,
-} from '@angular/forms';
+import { Component, DestroyRef, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from 'auth-lib';
-import { Subject, takeUntil } from 'rxjs';
 import { SharedInputComponent } from '../../../../../shared/components/shared-input/shared-input.component';
 import { ErrorMessComponent } from '../../../../../shared/components/error-mess/error-mess.component';
 import { Router, RouterLink } from '@angular/router';
@@ -17,6 +10,9 @@ import { AlertComponent } from '../../../../../shared/components/alert/alert.com
 import { Login } from '../../../domain/models/response/login.js';
 import { UserDataService } from '../../../application/services/user-data.service.js';
 import { ToastrService } from 'ngx-toastr';
+import { matchFieldsValidator } from '../../../../../shared/validators/match-fileds.validator.js';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { REGEX_PATTERNS } from '../../../../../core/consts/regex.js';
 
 @Component({
   selector: 'app-create-account',
@@ -36,35 +32,28 @@ export class CreateAccountComponent implements OnInit {
   private userDataService = inject(UserDataService);
   private router = inject(Router);
   private toasterService = inject(ToastrService);
-  private destroy$ = new Subject<void>();
-  isLoading: WritableSignal<boolean> = signal(false);
+  private destroyRef = inject(DestroyRef);
   err: WritableSignal<boolean> = signal(false);
   step: WritableSignal<number> = signal(1);
   private fb = inject(FormBuilder);
   registerForm = this.fb.nonNullable.group(
     {
-      username: ['', [Validators.required, Validators.pattern(/^[a-zA-Z][a-zA-Z0-9]{3,}$/)]],
+      username: ['', [Validators.required, Validators.pattern(REGEX_PATTERNS.USERNAME_PATTERN)]],
 
       email: ['', [Validators.required, Validators.email]],
 
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{5,}$/),
-        ],
-      ],
+      password: ['', [Validators.required, Validators.pattern(REGEX_PATTERNS.PASSWORD_PATTERN)]],
 
       confirmPassword: [''],
 
-      firstName: ['', [Validators.required, Validators.pattern(/^[A-Za-z][A-Za-z]+$/)]],
+      firstName: ['', [Validators.required, Validators.pattern(REGEX_PATTERNS.NAME_PATTERN)]],
 
-      lastName: ['', [Validators.required, Validators.pattern(/^[A-Za-z][A-Za-z]+$/)]],
+      lastName: ['', [Validators.required, Validators.pattern(REGEX_PATTERNS.NAME_PATTERN)]],
 
-      phone: ['', [Validators.required, Validators.pattern(/^01[0125][0-9]{8}$/)]],
+      phone: ['', [Validators.required, Validators.pattern(REGEX_PATTERNS.PHONE_PATTERN)]],
     },
     {
-      validators: this.passwordMatchValidator,
+      validators: matchFieldsValidator('password', 'confirmPassword'),
     },
   );
   otpForm = this.fb.group({
@@ -108,14 +97,12 @@ export class CreateAccountComponent implements OnInit {
   }
   register() {
     if (this.registerForm.valid) {
-      this.isLoading.set(true);
       this.authService
         .register(this.registerForm.getRawValue())
-        .pipe(takeUntil(this.destroy$))
+        .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: (res: Login) => {
             this.err.set(false);
-            this.isLoading.set(false);
             this.userDataService.setUserData({
               token: res.token,
               user: { email: res.user.email, username: res.user.username, role: res.user.role },
@@ -125,20 +112,12 @@ export class CreateAccountComponent implements OnInit {
           },
           error: (err: ErrorResponse) => {
             this.err.set(true);
-            this.isLoading.set(false);
           },
         });
     } else {
       this.passwordController.markAsTouched();
       this.confirmPasswordController.markAsTouched();
     }
-  }
-
-  passwordMatchValidator(form: AbstractControl): ValidationErrors | null {
-    const password = form.get('password')?.value;
-    const confirmPassword = form.get('confirmPassword')?.value;
-
-    return password === confirmPassword ? null : { passwordMismatch: true };
   }
 
   increaseStep() {
@@ -149,7 +128,7 @@ export class CreateAccountComponent implements OnInit {
         // call send email end point
         this.authService
           .sendEmailVerification({ email: this.emailController.value })
-          .pipe(takeUntil(this.destroy$))
+          .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
             next: (res: { message: string; code: string }) => {
               this.toasterService.success(res.message, 'Success');
@@ -167,7 +146,7 @@ export class CreateAccountComponent implements OnInit {
         // call confirm email end point
         this.authService
           .confirmEmail({ email: this.emailController.value, code: value })
-          .pipe(takeUntil(this.destroy$))
+          .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
             next: (res: { message: string }) => {
               this.err.set(false);
@@ -199,8 +178,5 @@ export class CreateAccountComponent implements OnInit {
   }
   decreaseStep() {
     this.step.set(this.step() - 1);
-  }
-  ngOnDestroy(): void {
-    this.destroy$.next();
   }
 }
