@@ -1,3 +1,328 @@
-<p>
-  create-account works!
-</p>
+<main class="py-12 space-y-16">
+  <section class="bg-white">
+    @if (step() > 1) {
+      <!-- Progress Bar -->
+
+      <ol class="flex items-center mb-6" aria-label="Progress">
+        <li class="flex items-center flex-1">
+          <span class="relative shrink-0" aria-current="step">
+            <!-- circle -->
+            <span
+              [class]="step() > 1 ? 'bg-blue-600' : 'border-blue-300 bg-white border-2'"
+              class="relative block w-2.5 h-2.5 rounded-sm rotate-45"
+            ></span>
+          </span>
+          <!-- line -->
+          <span
+            [class]="step() > 1 ? ' bg-blue-600' : 'border-dashed border-blue-300  border-t-2'"
+            class="flex-1 h-0.5 mx-1"
+          ></span>
+        </li>
+        <li class="flex items-center flex-1">
+          <span class="relative shrink-0" aria-current="step">
+            <!-- circle -->
+            <span
+              [class]="step() >= 2 ? 'bg-blue-600' : 'border-blue-300 bg-white border-2'"
+              class="relative block w-2.5 h-2.5 rounded-sm rotate-45"
+            ></span>
+          </span>
+          <!-- line -->
+          <span
+            [class]="step() > 2 ? ' bg-blue-600' : 'border-dashed border-blue-300  border-t-2'"
+            class="flex-1 h-0.5 mx-1"
+          ></span>
+        </li>
+
+        <li class="flex items-center flex-1">
+          <span class="relative shrink-0" aria-current="step">
+            <!-- circle -->
+            <span
+              [class]="step() >= 3 ? 'bg-blue-600' : 'border-blue-300 bg-white border-2'"
+              class="relative block w-2.5 h-2.5 rounded-sm rotate-45"
+            ></span>
+          </span>
+          <!-- line -->
+          <span
+            [class]="step() > 3 ? ' bg-blue-600' : 'border-dashed border-blue-300  border-t-2'"
+            class="flex-1 h-0.5 mx-1"
+          ></span>
+        </li>
+        <li class="flex items-center">
+          <span class="relative shrink-0" aria-current="step">
+            <!-- circle -->
+            <span
+              [class]="step() === 4 ? 'bg-blue-600' : 'border-blue-300 bg-white border-2'"
+              class="relative block w-2.5 h-2.5 rounded-sm rotate-45"
+            ></span>
+          </span>
+        </li>
+      </ol>
+    }
+
+    <!-- Main Title -->
+    <h2 class="text-2xl font-bold text-gray-900 mb-6 font-inter">Create Account</h2>
+    @if (step() === 2) {
+      <h2 class="text-lg font-semibold text-blue-600 mt-1 mb-3 font-inter">Verify OTP</h2>
+      <p class="text-sm text-gray-600 mb-6 font-geist">
+        Please enter the 6-digit code we have sent to:
+        <span class="text-gray-900">user@example.com</span>.
+        <button (click)="decreaseStep()" class="text-blue-600 hover:underline">Edit</button>
+      </p>
+    } @else if (step() === 3) {
+      <h2 class="text-lg font-semibold text-blue-600 mt-1 mb-6 font-inter">
+        Tell us more about you
+      </h2>
+    } @else if (step() === 4) {
+      <h2 class="text-lg font-semibold text-blue-600 mt-1 mb-6">Create a strong password</h2>
+    }
+
+    <!-- Forms -->
+    <!-- Main Form -->
+    <form class="space-y-6" (ngSubmit)="register()" [formGroup]="registerForm">
+      <!-- Email Input -->
+      @if (step() === 1) {
+        <div>
+          <app-shared-input
+            [control]="emailController"
+            [obj]="{ id: 'email', label: 'Email:', type: 'email', placeHolder: 'user@exmaple.com' }"
+          ></app-shared-input>
+          @if (emailController.touched && emailController.errors) {
+            @if (emailController.hasError('required')) {
+              <app-error-mess mess="Your email is required"></app-error-mess>
+            }
+            @if (emailController.hasError('email')) {
+              <app-error-mess mess="Invalid email"></app-error-mess>
+            }
+          }
+        </div>
+        @if (err()) {
+          <app-alert mess="Something went wrong"></app-alert>
+        }
+        <app-shared-btn mess="Next" (onBtnClicked)="increaseStep()"></app-shared-btn>
+      }
+
+      <!-- About You Form -->
+      @if (step() === 3) {
+        <!-- F & L Names -->
+        <div class="grid grid-cols-1 gap-4">
+          <div>
+            <app-shared-input
+              [control]="firstNameController"
+              [obj]="{ id: 'first-name', label: 'First name:', type: 'text', placeHolder: 'Ahmed' }"
+            ></app-shared-input>
+            @if (firstNameController.touched && firstNameController.errors) {
+              @if (firstNameController.hasError('required')) {
+                <app-error-mess mess="Your fisrt name is required"></app-error-mess>
+              }
+              @if (firstNameController.hasError('pattern')) {
+                <app-error-mess mess="Invalid name"></app-error-mess>
+              }
+            }
+          </div>
+          <div>
+            <app-shared-input
+              [control]="lastNameController"
+              [obj]="{
+                id: 'last-name',
+                label: 'Last name:',
+                type: 'text',
+                placeHolder: 'Abdullah',
+              }"
+            ></app-shared-input>
+            @if (lastNameController.touched && lastNameController.errors) {
+              @if (lastNameController.hasError('required')) {
+                <app-error-mess mess="Your last name is required"></app-error-mess>
+              }
+              @if (lastNameController.hasError('pattern')) {
+                <app-error-mess mess="Invalid name"></app-error-mess>
+              }
+            }
+          </div>
+        </div>
+
+        <!-- Username -->
+        <div>
+          <app-shared-input
+            [control]="userNameController"
+            [obj]="{
+              id: 'username',
+              label: 'Username:',
+              type: 'text',
+              placeHolder: 'user123',
+            }"
+          ></app-shared-input>
+          @if (userNameController.touched && userNameController.errors) {
+            @if (userNameController.hasError('required')) {
+              <app-error-mess mess="Username is required"></app-error-mess>
+            }
+            @if (userNameController.hasError('pattern')) {
+              <app-error-mess mess="Invalid username"></app-error-mess>
+            }
+          }
+        </div>
+
+        <!-- Phone -->
+        <div>
+          <app-shared-input
+            [control]="phoneController"
+            [obj]="{
+              id: 'phone',
+              label: 'Phone:',
+              type: 'tel',
+              placeHolder: '01xxxxxxxxx',
+            }"
+          ></app-shared-input>
+          @if (phoneController.touched && phoneController.errors) {
+            @if (phoneController.hasError('required')) {
+              <app-error-mess mess="Your phone number is required"></app-error-mess>
+            }
+            @if (phoneController.hasError('pattern')) {
+              <app-error-mess mess="Invalid phone number"></app-error-mess>
+            }
+          }
+        </div>
+
+        <app-shared-btn mess="Next" (onBtnClicked)="increaseStep()"></app-shared-btn>
+      }
+
+      <!-- Password & Confirm password -->
+      @if (step() === 4) {
+        <!-- Password -->
+        <div>
+          <app-shared-input
+            [control]="passwordController"
+            [obj]="{
+              id: 'password',
+              label: 'Password:',
+              type: 'password',
+              placeHolder: '•••••••',
+            }"
+          >
+          </app-shared-input>
+          @if (passwordController.touched && passwordController.errors) {
+            @if (passwordController.hasError('required')) {
+              <app-error-mess mess="Password is required"></app-error-mess>
+            }
+            @if (passwordController.hasError('pattern')) {
+              <app-error-mess mess="Invalid password"></app-error-mess>
+            }
+          }
+        </div>
+
+        <!-- Confirm Password -->
+        <div>
+          <app-shared-input
+            [control]="confirmPasswordController"
+            [obj]="{
+              id: 'confirm-password',
+              label: 'Confirm Password:',
+              type: 'password',
+              placeHolder: '••••••••',
+            }"
+          ></app-shared-input>
+          @if (
+            (confirmPasswordController.touched && confirmPasswordController.errors) ||
+            registerForm.errors
+          ) {
+            @if (registerForm.hasError('passwordMismatch')) {
+              <app-error-mess mess="Passwords don't match"></app-error-mess>
+            }
+          }
+        </div>
+
+        @if (err()) {
+          <app-alert mess="Something went wrong"></app-alert>
+        }
+
+        <!-- Submit Form -->
+        <button
+          type="submit"
+          class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center transition-colors disabled:opacity-50"
+        >
+          Create Account
+        </button>
+      }
+    </form>
+
+    <!-- OTP Form -->
+    @if (step() === 2) {
+      <form [formGroup]="otpForm">
+        <fieldset class="w-full">
+          <legend class="sr-only">6-digit verification code</legend>
+
+          <div class="flex gap-2 justify-center mb-4" role="group">
+            <input
+              formControlName="digit1"
+              id="otp-1"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+              class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
+            />
+
+            <input
+              formControlName="digit2"
+              id="otp-2"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+              class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
+            />
+
+            <input
+              formControlName="digit3"
+              id="otp-3"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+              class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
+            />
+
+            <input
+              formControlName="digit4"
+              id="otp-4"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+              class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
+            />
+
+            <input
+              formControlName="digit5"
+              id="otp-5"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+              class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
+            />
+
+            <input
+              formControlName="digit6"
+              id="otp-6"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+              class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+        </fieldset>
+
+        @if (otpForm.touched && otpForm.invalid) {
+          <app-error-mess mess="Please enter a valid 6-digit code"></app-error-mess>
+        }
+        @if (err()) {
+          <app-alert mess="Something went wrong"></app-alert>
+        }
+        <app-shared-btn mess="Verify Code" (onBtnClicked)="increaseStep()"></app-shared-btn>
+      </form>
+    }
+
+    <!-- Statement -->
+    @if (step() === 1) {
+      <p class="text-center text-sm text-gray-600 mt-6 font-geist">
+        Already have an account?
+        <a routerLink="/auth/signin" class="text-blue-600 font-medium hover:underline">Login</a>
+      </p>
+    }
+  </section>
+</main>

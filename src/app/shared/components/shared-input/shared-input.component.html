@@ -1,0 +1,24 @@
+<div class="relative">
+  <label [for]="obj().id" class="block mb-2 text-[16px] font-medium text-gray-900 font-geist">{{
+    obj().label
+  }}</label>
+  <input
+    [formControl]="control()"
+    [type]="obj().type === 'password' ? (hidePassword() ? 'password' : 'text') : obj().type"
+    [id]="obj().id"
+    [name]="obj().id"
+    [placeholder]="obj().placeHolder"
+    class="bg-gray-50 border border-blue-400 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400"
+  />
+  @if (obj().type === 'password') {
+    <button
+      (click)="togglePassword()"
+      type="button"
+      id="toggle-password"
+      aria-label="Show password"
+      class="absolute top-11 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600"
+    >
+      <i class="fa-solid" [class]="hidePassword() ? 'fa-eye' : 'fa-eye-slash'"></i>
+    </button>
+  }
+</div>
