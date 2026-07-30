@@ -50,7 +50,13 @@ export class LoginComponent implements OnInit {
             this.err.set(false);
             this.userDataService.setUserData({
               token: res.token,
-              user: { email: res.user.email, username: res.user.username, role: res.user.role },
+              user: {
+                email: res.user.email,
+                username: res.user.username,
+                role: res.user.role,
+                fName: res.user.firstName,
+                lName: res.user.lastName,
+              },
             });
             this.toaster.success('Signedin successfully', 'Success');
             this.router.navigate(['/main']);

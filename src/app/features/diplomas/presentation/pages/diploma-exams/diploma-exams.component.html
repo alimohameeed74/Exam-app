@@ -1,3 +1,68 @@
-<p>
-  diploma-exams works!
-</p>
+<main class="space-y-6">
+  <!-- Mini Header Section -->
+  <header class="flex items-center gap-3">
+    <!-- Back Navigation Button -->
+    <button
+      (click)="back()"
+      aria-label="Go back to Previous Page"
+      class="flex h-19 w-19 items-center justify-center rounded-xl border border-blue-200 bg-white text-blue-600 shadow-xs hover:bg-blue-50 transition-all shrink-0"
+    >
+      <svg
+        class="h-5 w-5"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+      </svg>
+    </button>
+
+    <!-- Header Banner -->
+    <div
+      class="flex flex-1 items-center gap-3 bg-[#2F5BEA] text-white px-5 py-4 shadow-sm text-3xl"
+    >
+      <!-- Banner Icon Box -->
+      <div
+        class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/20 backdrop-blur-xs shrink-0"
+        aria-hidden="true"
+      >
+        <svg
+          class="h-6 w-6 text-white"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18c-2.305 0-4.408.867-6 2.292m0-14.25v14.25"
+          />
+        </svg>
+      </div>
+      <!-- Page Main Title -->
+      <h1 class="text-xl md:text-2xl font-bold tracking-tight">Frontend Development Exams</h1>
+    </div>
+  </header>
+
+  <!-- Exams List Container -->
+  <section aria-label="Available Exams List" class="space-y-4">
+    @for (diplomaExam of diplomaExams(); track diplomaExam.id) {
+      <app-exam-card [card]="diplomaExam"></app-exam-card>
+    } @empty {
+      <div
+        class="col-span-full flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 py-16 text-center"
+      >
+        <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
+          <i class="fa-solid fa-graduation-cap text-2xl text-slate-400"></i>
+        </div>
+
+        <h3 class="text-lg font-semibold text-slate-700">No Exams Found</h3>
+
+        <p class="mt-2 max-w-md text-sm text-slate-500">There are no exams right now.</p>
+      </div>
+    }
+  </section>
+</main>

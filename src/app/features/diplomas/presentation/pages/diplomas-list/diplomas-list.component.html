@@ -1,150 +1,48 @@
 <!-- Page title banner -->
-<section
-  class="flex items-center gap-3 bg-[#2F5BEA] text-white px-5 py-4 mb-6 shadow-sm"
-  aria-labelledby="diplomas-heading"
->
-  <svg
-    class="w-6 h-6 shrink-0"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    aria-hidden="true"
-  >
-    <path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="1.8"
-      d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.42A12.083 12.083 0 0121 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-.98.2-1.91.56-2.76M12 14l-6.16-3.42M12 14v7"
-    />
-  </svg>
-  <h2 id="diplomas-heading" class="text-lg font-semibold">Diplomas</h2>
+<section class="flex items-center gap-3 bg-[#2F5BEA] text-white px-5 py-4 mb-6 shadow-sm text-3xl">
+  <i class="fa-solid fa-graduation-cap"></i>
+  <h2 class="font-bold font-inter">Diplomas</h2>
 </section>
 
 <!-- Diploma cards grid -->
 <section aria-label="Available diploma programs">
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-    <!-- Card: Flutter Development -->
-    <article class="group relative overflow-hidden shadow-sm ring-1 ring-black/5 h-56 sm:h-75">
-      <img
-        src="https://images.unsplash.com/photo-1611262588024-d12430b98920?q=80&w=800&auto=format&fit=crop"
-        alt="Mobile chat app interface illustrating Flutter development"
-        class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-        loading="lazy"
-      />
-      <div class="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent"></div>
-      <div class="absolute bottom-0 left-0 right-0 bg-[#2F5BEA]/90 px-4 py-3">
-        <h3 class="text-white font-semibold text-sm">Flutter Development</h3>
-        <p class="text-blue-100 text-xs mt-1 line-clamp-2">
-          Discover Flutter, the game-changing framework that lets...
-        </p>
-      </div>
-    </article>
-
-    <!-- Card: AI & ML Development (expanded description) -->
-    <article class="group relative overflow-hidden shadow-sm ring-1 ring-black/5 h-56 sm:h-75">
-      <img
-        src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=800&auto=format&fit=crop"
-        alt="Abstract AI text graphic representing Artificial Intelligence and Machine Learning"
-        class="absolute inset-0 w-full h-full object-cover"
-        loading="lazy"
-      />
-      <div class="absolute inset-0 bg-black/10"></div>
-      <button
-        type="button"
-        class="absolute top-3 right-3 w-6 h-6 rounded-full bg-yellow-400 text-white text-xs font-bold flex items-center justify-center shadow"
-        aria-label="AI badge"
+    @for (diploma of diplomas(); track diploma.id) {
+      <app-diploma-card [diploma]="diploma"></app-diploma-card>
+    } @empty {
+      <div
+        class="col-span-full flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 py-16 text-center"
       >
-        A
-      </button>
-      <div class="absolute bottom-0 left-0 right-0 bg-[#2F5BEA]/90 px-4 py-3">
-        <h3 class="text-white font-semibold text-sm">AI &amp; ML Development</h3>
-        <p class="text-blue-100 text-xs mt-1 line-clamp-4">
-          Explore the foundations and frontiers of Artificial Intelligence – from machine learning
-          and neural networks to natural language processing and computer vision. Gain practical
-          insight into how AI systems are built, trained, and deployed across industries, and
-          understand the ethical implications shaping the future of intelligent technology.
+        <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
+          <i class="fa-solid fa-graduation-cap text-2xl text-slate-400"></i>
+        </div>
+
+        <h3 class="text-lg font-semibold text-slate-700">No diplomas found</h3>
+
+        <p class="mt-2 max-w-md text-sm text-slate-500">
+          There are currently no diplomas available. Please check back later.
         </p>
       </div>
-    </article>
-
-    <!-- Card: Back-End Web Development -->
-    <article class="group relative overflow-hidden shadow-sm ring-1 ring-black/5 h-56 sm:h-75">
-      <img
-        src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop"
-        alt="Code editor screen representing Back-End Web Development"
-        class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-        loading="lazy"
-      />
-      <div class="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent"></div>
-      <div class="absolute bottom-0 left-0 right-0 bg-[#2F5BEA]/90 px-4 py-3">
-        <h3 class="text-white font-semibold text-sm">Back-End Web Development</h3>
-        <p class="text-blue-100 text-xs mt-1 line-clamp-2">
-          Become a professional Backend Developer.
-        </p>
-      </div>
-    </article>
-
-    <!-- Card: Data Analysis -->
-    <article class="group relative overflow-hidden shadow-sm ring-1 ring-black/5 h-56 sm:h-75">
-      <img
-        src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop"
-        alt="Colorful data streams representing Data Analysis"
-        class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-        loading="lazy"
-      />
-      <div class="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent"></div>
-      <div class="absolute bottom-0 left-0 right-0 bg-[#2F5BEA]/90 px-4 py-3">
-        <h3 class="text-white font-semibold text-sm">Data Analysis</h3>
-        <p class="text-blue-100 text-xs mt-1 line-clamp-2">Become a professional Data Scientist.</p>
-      </div>
-    </article>
-
-    <!-- Card: Software Testing -->
-    <article class="group relative overflow-hidden shadow-sm ring-1 ring-black/5 h-56 sm:h-75">
-      <img
-        src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?q=80&w=800&auto=format&fit=crop"
-        alt="Digital dashboard interface representing Software Testing"
-        class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-        loading="lazy"
-      />
-      <div class="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent"></div>
-      <div class="absolute bottom-0 left-0 right-0 bg-[#2F5BEA]/90 px-4 py-3">
-        <h3 class="text-white font-semibold text-sm">Software Testing</h3>
-        <p class="text-blue-100 text-xs mt-1 line-clamp-2">
-          Become a professional Software Tester.
-        </p>
-      </div>
-    </article>
-
-    <!-- Card: Cyber Security -->
-    <article class="group relative overflow-hidden shadow-sm ring-1 ring-black/5 h-56 sm:h-75">
-      <img
-        src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop"
-        alt="Digital shield and lock icons representing Cyber Security"
-        class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-        loading="lazy"
-      />
-      <div class="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent"></div>
-      <div class="absolute bottom-0 left-0 right-0 bg-[#2F5BEA]/90 px-4 py-3">
-        <h3 class="text-white font-semibold text-sm">Cyber Security</h3>
-        <p class="text-blue-100 text-xs mt-1 line-clamp-2">
-          Become a professional Cyber Security Engineer.
-        </p>
-      </div>
-    </article>
+    }
   </div>
 </section>
 
 <!-- Scroll indicator -->
-<div class="flex flex-col items-center gap-1 mt-8 text-gray-400 text-sm" role="note">
-  <span>Scroll to view more</span>
-  <svg
-    class="w-4 h-4 animate-bounce"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    aria-hidden="true"
+@if (diplomas().length !== 0) {
+  <div
+    (click)="seeMore()"
+    class="flex flex-col items-center gap-1 mt-8 text-gray-400 text-sm"
+    role="note"
   >
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-  </svg>
-</div>
+    <button>Scroll to view more</button>
+    <svg
+      class="w-4 h-4 animate-bounce"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      aria-hidden="true"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </div>
+}

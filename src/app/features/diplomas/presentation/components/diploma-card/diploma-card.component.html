@@ -1,0 +1,24 @@
+<article
+  (click)="showDiplomaDetails(diploma().id)"
+  class="cursor-pointer group relative h-56 overflow-hidden shadow-sm ring-1 ring-black/5 sm:h-75"
+>
+  <img
+    [src]="diploma().image"
+    [alt]="diploma().title"
+    class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+  />
+
+  <div class="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent"></div>
+
+  <div class="absolute inset-x-0 bottom-0 bg-[#2F5BEA]/90 p-4 transition-all duration-500">
+    <h3 class="text-sm font-semibold text-white">
+      {{ diploma().title }}
+    </h3>
+
+    <p
+      class="mt-2 overflow-hidden text-xs leading-5 text-blue-100 max-h-10 transition-all duration-500 group-hover:max-h-40"
+    >
+      {{ diploma().description }}.
+    </p>
+  </div>
+</article>

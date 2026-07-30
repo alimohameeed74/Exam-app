@@ -10,7 +10,7 @@ export const routes: Routes = [
       ),
   },
   {
-    path: ':diploma-name/exams',
+    path: ':id/exams',
     loadComponent: () =>
       import('./presentation/pages/diploma-exams/diploma-exams.component').then(
         (p) => p.DiplomaExamsComponent,
