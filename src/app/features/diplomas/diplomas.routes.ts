@@ -16,4 +16,11 @@ export const routes: Routes = [
         (p) => p.DiplomaExamsComponent,
       ),
   },
+  {
+    path: ':id/exams/:examId/questions',
+    loadComponent: () =>
+      import('./presentation/pages/exam-questions/exam-questions.component').then(
+        (p) => p.ExamQuestionsComponent,
+      ),
+  },
 ];

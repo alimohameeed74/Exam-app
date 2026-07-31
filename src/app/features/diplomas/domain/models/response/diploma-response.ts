@@ -1,3 +1,5 @@
+import { DiplomaExamResponse } from './diploma-exam-response.js';
+
 export interface DiplomaResponse {
   id: string;
   title: string;
@@ -6,4 +8,5 @@ export interface DiplomaResponse {
   immutable: boolean;
   createdAt: string;
   updatedAt: string;
+  exams: DiplomaExamResponse[];
 }

@@ -1,6 +1,6 @@
 <main class="space-y-6">
   <!-- Mini Header Section -->
-  <header class="flex items-center gap-3">
+  <header class="flex items-center gap-3 font-inter">
     <!-- Back Navigation Button -->
     <button
       (click)="back()"
@@ -43,13 +43,15 @@
         </svg>
       </div>
       <!-- Page Main Title -->
-      <h1 class="text-xl md:text-2xl font-bold tracking-tight">Frontend Development Exams</h1>
+      <h2 class="text-lg md:text-2xl font-bold tracking-tight">
+        {{ diplomaDetails()?.title }} Exams
+      </h2>
     </div>
   </header>
 
   <!-- Exams List Container -->
   <section aria-label="Available Exams List" class="space-y-4">
-    @for (diplomaExam of diplomaExams(); track diplomaExam.id) {
+    @for (diplomaExam of diplomaDetails()?.exams; track diplomaExam.id) {
       <app-exam-card [card]="diplomaExam"></app-exam-card>
     } @empty {
       <div

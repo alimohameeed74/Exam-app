@@ -1,10 +1,12 @@
+import { DiplomaResponse } from './../../../domain/models/response/diploma-response';
 import { Component, DestroyRef, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DiplomaService } from '../../../application/services/diploma.service.js';
+import { DiplomaService } from '../../../application/services/diploma/diploma.service.js';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DiplomaExamResponse } from '../../../domain/models/response/diploma-exam-response.js';
 import { ExamCardComponent } from '../../components/exam-card/exam-card.component';
 import { Location } from '@angular/common';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-diploma-exams',
@@ -17,29 +19,26 @@ export class DiplomaExamsComponent implements OnInit {
   private loc = inject(Location);
   private destroyRef = inject(DestroyRef);
   private diplomaService = inject(DiplomaService);
-
-  diplomaExams: WritableSignal<DiplomaExamResponse[]> = signal([]);
+  diplomaDetails: WritableSignal<DiplomaResponse | null> = signal(null);
   constructor() {}
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe((param) => {
       const id = param.get('id');
       if (id) {
-        this.getDiplomaExams(id);
+        this.getDiplomaDetails(id);
       }
     });
   }
 
-  getDiplomaExams(id: string) {
+  getDiplomaDetails(id: string) {
     this.diplomaService
-      .getDiplomaExamsId(id)
+      .getDiplomaDetails(id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (res: DiplomaExamResponse[]) => {
+        next: (res: DiplomaResponse) => {
           console.log(res);
-          if (res.length !== 0) {
-            this.diplomaExams.set(res);
-          }
+          this.diplomaDetails.set(res);
         },
       });
   }

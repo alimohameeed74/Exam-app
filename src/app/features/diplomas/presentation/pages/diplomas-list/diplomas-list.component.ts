@@ -1,5 +1,5 @@
 import { Component, DestroyRef, inject, OnInit, signal, WritableSignal } from '@angular/core';
-import { DiplomaService } from '../../../application/services/diploma.service.js';
+import { DiplomaService } from '../../../application/services/diploma/diploma.service.js';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DiplomaResponse } from '../../../domain/models/response/diploma-response.js';
 import { DiplomaCardComponent } from '../../components/diploma-card/diploma-card.component';

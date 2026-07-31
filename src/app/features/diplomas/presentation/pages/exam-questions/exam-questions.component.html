@@ -1,0 +1,282 @@
+<main class="w-full shadow-sm overflow-hidden">
+  <!-- Mini Header Section -->
+  <header class="flex items-center mb-4 gap-3 font-inter">
+    <!-- Back Navigation Button -->
+    <button
+      (click)="back()"
+      aria-label="Go back to Previous Page"
+      class="flex h-19 w-19 items-center justify-center rounded-xl border border-blue-200 bg-white text-blue-600 shadow-xs hover:bg-blue-50 transition-all shrink-0"
+    >
+      <svg
+        class="h-5 w-5"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+      </svg>
+    </button>
+
+    <!-- Header Banner -->
+    <div
+      class="flex flex-1 items-center gap-3 bg-[#2F5BEA] text-white px-5 py-4 shadow-sm text-3xl"
+    >
+      <!-- Banner Icon Box -->
+      <div
+        class="flex h-10 w-10 items-center justify-center rounded-lg shrink-0"
+        aria-hidden="true"
+      >
+        <i class="fa-regular fa-circle-question"></i>
+      </div>
+      <!-- Page Main Title -->
+      <h2 class="text-xl md:text-2xl font-bold tracking-tight">
+        {{ examFullDetails()?.title }}
+      </h2>
+    </div>
+  </header>
+
+  <!-- Quiz meta / progress -->
+  <section
+    aria-label="Quiz progress"
+    class="bg-white px-5 pt-5 pb-4 border-b border-gray-100 font-geist"
+  >
+    <div class="flex flex-col items-start sm:flex-row sm:items-center justify-between mb-3">
+      <p class="text-sm font-medium text-gray-500">
+        {{ examFullDetails()?.diploma?.title }} - {{ examFullDetails()?.title }}
+      </p>
+      <div class="flex items-center gap-4">
+        <p class="text-sm text-gray-500">
+          Question <span class="font-semibold text-gray-700">{{ currentIndex() + 1 }}</span> of
+          <span class="font-semibold text-gray-700">{{ examFullDetails()?.questionsCount }}</span>
+        </p>
+        <div class="relative w-9 h-9" role="timer" aria-label="Time remaining 05:13">
+          <svg class="w-9 h-9 -rotate-90" viewBox="0 0 36 36">
+            <circle cx="18" cy="18" r="16" fill="none" stroke="#e5e7eb" stroke-width="3"></circle>
+            <circle
+              cx="18"
+              cy="18"
+              r="16"
+              fill="none"
+              stroke="#2563eb"
+              stroke-width="3"
+              [attr.stroke-dasharray]="circumference"
+              [attr.stroke-dashoffset]="progressOffset()"
+              stroke-linecap="round"
+            />
+          </svg>
+          <span
+            class="absolute inset-0 flex items-center justify-center text-[9px] font-semibold text-blue-600"
+          >
+            {{ formattedTime() }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="w-full bg-gray-200 rounded-full h-1.5">
+      <div
+        class="bg-blue-600 h-1.5 rounded-full"
+        [style]="`width: ${((currentIndex() + 1) / questions().length) * 100}%`"
+      ></div>
+    </div>
+  </section>
+
+  @if (examState() === 'taking') {
+    <!-- Question -->
+    @if (currentQuestion()) {
+      <section aria-labelledby="question-title" class="px-5 py-5 bg-white">
+        <h2 id="question-title" class="text-blue-700 font-semibold text-xl sm:text-2xl mb-4">
+          {{ currentQuestion().text }}
+        </h2>
+        <form class="space-y-2">
+          <fieldset>
+            <legend class="sr-only">Answer options</legend>
+
+            @for (answer of currentQuestion().answers; track answer.id) {
+              <label
+                (click)="selectAnswer(currentQuestion().id, answer.id)"
+                class="mb-4 flex cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 transition-all duration-200"
+                [class.border-blue-500]="isSelected(currentQuestion().id, answer.id)"
+                [class.bg-blue-50]="isSelected(currentQuestion().id, answer.id)"
+                [class.ring-2]="isSelected(currentQuestion().id, answer.id)"
+                [class.ring-blue-200]="isSelected(currentQuestion().id, answer.id)"
+                [class.border-gray-100]="!isSelected(currentQuestion().id, answer.id)"
+                [class.bg-gray-50]="!isSelected(currentQuestion().id, answer.id)"
+                [class.hover:bg-gray-100]="!isSelected(currentQuestion().id, answer.id)"
+              >
+                <input
+                  type="radio"
+                  name="answer"
+                  class="h-4 w-4 text-blue-600 border-gray-300"
+                  [checked]="isSelected(currentQuestion().id, answer.id)"
+                />
+
+                <span
+                  class="text-sm"
+                  [class.font-medium]="selectedAnswerId() === answer.id"
+                  [class.text-black]="selectedAnswerId() === answer.id"
+                  [class.text-gray-800]="selectedAnswerId() !== answer.id"
+                >
+                  {{ answer.text }}
+                </span>
+              </label>
+            }
+          </fieldset>
+        </form>
+      </section>
+    }
+  }
+  @if (examState() === 'submitted') {
+    <div class="grid grid-cols-1 md:grid-cols-[220px_1fr]">
+      <!-- Summary panel -->
+      <app-analytic-card [submission]="submissionDetails()!.submission"></app-analytic-card>
+
+      <!-- Question review list -->
+      <section
+        aria-label="Answer review"
+        class="max-h-105 space-y-6 overflow-y-auto border-t border-gray-100 p-5 font-geist md:border-t-0 md:border-l"
+      >
+        @for (item of submissionDetails()?.analytics; track item.questionId) {
+          <article>
+            <h3 class="mb-3 text-base font-semibold text-blue-700">
+              {{ item.questionText }}
+            </h3>
+
+            <ul class="space-y-2">
+              <!-- User Answer -->
+              @if (item.selectedAnswer) {
+                <li
+                  class="flex items-center gap-3 rounded-lg px-4 py-3"
+                  [class.bg-emerald-50]="item.isCorrect"
+                  [class.bg-red-50]="!item.isCorrect"
+                >
+                  <input
+                    type="radio"
+                    checked
+                    disabled
+                    class="h-4 w-4 border-gray-300"
+                    [class.text-emerald-500]="item.isCorrect"
+                    [class.text-red-500]="!item.isCorrect"
+                  />
+
+                  <div class="flex flex-col">
+                    <span
+                      class="text-xs font-medium"
+                      [class.text-emerald-700]="item.isCorrect"
+                      [class.text-red-700]="!item.isCorrect"
+                    >
+                      Your Answer
+                    </span>
+
+                    <span class="text-sm text-gray-800">
+                      {{ item.selectedAnswer.text }}
+                    </span>
+                  </div>
+                </li>
+              } @else {
+                <!-- Not Answered -->
+                <li class="rounded-lg border border-yellow-200 bg-yellow-50 px-4 py-3">
+                  <span class="text-sm font-medium text-yellow-700"> Not Answered </span>
+                </li>
+              }
+
+              <!-- Correct Answer -->
+              @if (!item.isCorrect) {
+                <li class="flex items-center gap-3 rounded-lg bg-emerald-50 px-4 py-3">
+                  <input
+                    type="radio"
+                    checked
+                    disabled
+                    class="h-4 w-4 border-gray-300 text-emerald-500"
+                  />
+
+                  <div class="flex flex-col">
+                    <span class="text-xs font-medium text-emerald-700"> Correct Answer </span>
+
+                    <span class="text-sm text-gray-800">
+                      {{ item.correctAnswer.text }}
+                    </span>
+                  </div>
+                </li>
+              }
+            </ul>
+          </article>
+        }
+      </section>
+    </div>
+  }
+  <!-- Navigation -->
+  <footer class="flex items-center justify-between gap-3 px-5 pb-5 font-geist">
+    @if (examState() === 'submitted') {
+      <button
+        (click)="restartExam()"
+        type="button"
+        class="flex-1 inline-flex items-center justify-center gap-1 px-4 py-2.5 bg-gray-300 text-gray-400 hover:bg-gray-500 text-sm font-medium transition-colors"
+      >
+        <i class="fa-solid fa-arrow-rotate-left"></i>
+        Restart
+      </button>
+      <button
+        (click)="explore()"
+        type="button"
+        class="flex-1 inline-flex items-center justify-center gap-1 px-4 py-2.5 text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        Explore
+      </button>
+    } @else if (examState() === 'taking') {
+      <button
+        (click)="previousQuestion()"
+        [disabled]="currentIndex() === 0"
+        type="button"
+        disabled
+        class="flex-1 inline-flex items-center justify-center gap-1 px-4 py-2.5 disabled:bg-gray-100 disabled:text-gray-400 text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        Previous
+      </button>
+      @if (currentIndex() < questions().length - 1) {
+        <button
+          (click)="nextQuestion()"
+          [disabled]="currentIndex() === questions().length - 1"
+          type="button"
+          class="flex-1 inline-flex items-center justify-center gap-1 px-4 py-2.5 disabled:bg-gray-100 disabled:text-gray-400 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-colors"
+        >
+          Next
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      }
+      @if (currentIndex() === questions().length - 1) {
+        <button
+          (click)="submitExam()"
+          type="button"
+          class="flex-1 inline-flex items-center justify-center gap-1 px-4 py-2.5 disabled:bg-gray-100 disabled:text-gray-400 bg-green-600 hover:bg-green-700 text-white text-sm font-medium transition-colors"
+        >
+          End Exam
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      }
+    }
+  </footer>
+</main>

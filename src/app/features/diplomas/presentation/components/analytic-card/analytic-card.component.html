@@ -1,0 +1,58 @@
+<section
+  aria-label="Score summary"
+  class="flex flex-col items-center justify-center gap-6 rounded-xl bg-blue-50 p-6"
+>
+  <div class="relative h-40 w-40">
+    <svg class="h-40 w-40 -rotate-90" viewBox="0 0 36 36">
+      <!-- Background -->
+      <circle cx="18" cy="18" r="15.9" fill="none" stroke="#E5E7EB" stroke-width="4" />
+
+      <!-- Progress -->
+      <circle
+        cx="18"
+        cy="18"
+        r="15.9"
+        fill="none"
+        stroke="#22C55E"
+        stroke-width="4"
+        [attr.stroke-dasharray]="scorePercentage() + ' 100'"
+        stroke-linecap="round"
+      />
+    </svg>
+  </div>
+
+  <dl class="w-full space-y-3 text-sm">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="h-3 w-3 rounded-full bg-green-500"></span>
+        <dt class="text-gray-600">Correct</dt>
+      </div>
+
+      <dd class="font-semibold text-green-600">
+        {{ submission().correctAnswers }}
+      </dd>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="h-3 w-3 rounded-full bg-red-500"></span>
+        <dt class="text-gray-600">Incorrect</dt>
+      </div>
+
+      <dd class="font-semibold text-red-600">
+        {{ submission().wrongAnswers }}
+      </dd>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="h-3 w-3 rounded-full bg-blue-500"></span>
+        <dt class="text-gray-600">Total Questions</dt>
+      </div>
+
+      <dd class="font-semibold text-blue-700">
+        {{ submission().totalQuestions }}
+      </dd>
+    </div>
+  </dl>
+</section>
