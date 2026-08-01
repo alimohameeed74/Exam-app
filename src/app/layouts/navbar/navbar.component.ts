@@ -22,14 +22,22 @@ export class NavbarComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   links: WritableSignal<string[]> = signal([]);
   ngOnInit() {
-    this.links.update((prev) => [...prev, this.router.url]);
     this.router.events
       .pipe(
         filter((event): event is NavigationEnd => event instanceof NavigationEnd),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((event: NavigationEnd) => {
-        this.links.update((prev) => [...prev, `/   ${event.urlAfterRedirects}`]);
+        const filtered = event.urlAfterRedirects
+          .split('/')
+          .filter(
+            (segment) =>
+              segment &&
+              !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+                segment,
+              ),
+          );
+        this.links.set(filtered);
       });
   }
 }
