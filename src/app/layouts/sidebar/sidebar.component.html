@@ -1,0 +1,136 @@
+<aside class="flex flex-col h-screen justify-between">
+  <!-- Logo & Title -->
+  <div>
+    <div class="mb-8 px-2">
+      <img src="final-logo.png" alt="Logo" class="bg-black p-2 text-white w-48 mb-4 rounded" />
+      <div class="flex items-center gap-2">
+        <span
+          class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-blue-600 text-white"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l-4 3 4 3m8-6l4 3-4 3" />
+          </svg>
+        </span>
+        <h1 class="text-blue-600 font-semibold text-xl">Exam App</h1>
+      </div>
+    </div>
+
+    <!-- Nav Links -->
+    <nav class="space-y-1">
+      <a
+        routerLink="/main/diplomas"
+        routerLinkActive="bg-blue-100 border border-[#2F5BEA]/30 text-blue-600!"
+        class="flex items-center gap-3 text-gray-600 hover:text-gray-900 px-3 py-2.5 font-medium transition-colors"
+      >
+        <i class="fa-solid fa-graduation-cap text-lg"></i>
+        <span>Diplomas</span>
+      </a>
+      <a
+        routerLink="/main/account-settings"
+        routerLinkActive="bg-blue-100 border border-[#2F5BEA]/30 text-blue-600!"
+        class="flex items-center gap-3 text-gray-600 hover:text-gray-900 px-3 py-2.5 font-medium transition-colors"
+      >
+        <i class="fa-regular fa-user text-lg"></i>
+        <span>Account Settings</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- User Profile Footer -->
+  <div
+    class="relative flex items-center gap-3 rounded-2xl bg-gray-100/80 backdrop-blur-md border border-gray-200/60 p-4 shadow-sm hover:bg-gray-200/60 transition-all"
+  >
+    <!-- Avatar -->
+    <div
+      class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-600 text-lg font-bold text-white uppercase shadow-sm"
+    >
+      {{ userDataService._loggedUserData()?.user?.fName?.[0]
+      }}{{ userDataService._loggedUserData()?.user?.lName?.[0] }}
+    </div>
+
+    <!-- User Info -->
+    <div class="min-w-0 flex-1">
+      <p class="truncate text-sm font-semibold text-gray-800">
+        {{ userDataService._loggedUserData()?.user?.fName }}
+      </p>
+
+      <p class="truncate text-xs text-gray-500">
+        {{ userDataService._loggedUserData()?.user?.email }}
+      </p>
+    </div>
+
+    <!-- Menu Button -->
+    <button
+      (click)="showDropDown()"
+      type="button"
+      class="rounded-lg p-2 text-gray-500 transition hover:bg-gray-200/80 hover:text-gray-800"
+    >
+      <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+        <path
+          d="M10 6a2 2 0 110-4 2 2 0 010 4zm0 6a2 2 0 110-4 2 2 0 010 4zm0 6a2 2 0 110-4 2 2 0 010 4z"
+        />
+      </svg>
+    </button>
+
+    @if (showDropDown_()) {
+      <div
+        class="z-50 absolute bottom-full left-0 mb-2 w-full overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl divide-y divide-gray-100"
+      >
+        <ul class="py-1 text-sm text-gray-700">
+          <!-- Account -->
+          <li>
+            <a
+              routerLink="/main/account-settings"
+              class="flex items-center gap-3 px-4 py-2.5 font-medium text-gray-700 transition-colors hover:bg-gray-50"
+            >
+              <i class="fa-regular fa-user"></i>
+              <span>Account</span>
+            </a>
+          </li>
+
+          <!-- Dashboard -->
+          <li>
+            <a
+              routerLink="/main/diploams"
+              class="flex items-center gap-3 px-4 py-2.5 font-medium text-gray-700 transition-colors hover:bg-gray-50"
+            >
+              <i class="fa-solid fa-gear"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+
+          <li class="my-1 border-t border-gray-100"></li>
+
+          <li>
+            <button
+              (click)="logout()"
+              type="button"
+              class="flex w-full items-center gap-3 px-4 py-2.5 text-left font-medium text-red-500 transition-colors hover:bg-red-50 hover:text-red-600"
+            >
+              <svg
+                class="h-4 w-4 shrink-0 text-red-500"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                />
+              </svg>
+              <span>Logout</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    }
+  </div>
+</aside>

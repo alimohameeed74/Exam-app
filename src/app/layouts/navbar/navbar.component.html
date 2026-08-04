@@ -1,0 +1,12 @@
+<header class="bg-white border-b border-gray-200 px-4 sm:px-6 py-3">
+  <nav aria-label="Breadcrumb" class="flex gap-4">
+    @for (link of links(); track $index) {
+      <ol
+        [class]="$last ? 'text-blue-700' : 'text-gray-400'"
+        class="flex items-center text-sm capitalize font-bold"
+      >
+        <li>{{ link }}{{ $last ? '' : '&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;' }}</li>
+      </ol>
+    }
+  </nav>
+</header>

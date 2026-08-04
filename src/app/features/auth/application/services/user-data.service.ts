@@ -8,14 +8,20 @@ export class UserDataService {
   private platformId = inject(PLATFORM_ID);
   private loggedUserData: WritableSignal<{
     token: string;
-    user: { email: string; username: string; role: 'ADMIN' | 'USER' };
+    user: { email: string; username: string; role: 'ADMIN' | 'USER'; fName: string; lName: string };
   } | null> = signal(null);
   readonly _loggedUserData = this.loggedUserData.asReadonly();
   constructor() {}
   setUserData(
     data: {
       token: string;
-      user: { email: string; username: string; role: 'ADMIN' | 'USER' };
+      user: {
+        email: string;
+        username: string;
+        role: 'ADMIN' | 'USER';
+        fName: string;
+        lName: string;
+      };
     } | null,
   ) {
     this.loggedUserData.set(data);
@@ -36,9 +42,8 @@ export class UserDataService {
     }
   }
 
-  clearLoggedUserData() {
+  logout() {
     this.loggedUserData.set(null);
-
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('userData');
     }

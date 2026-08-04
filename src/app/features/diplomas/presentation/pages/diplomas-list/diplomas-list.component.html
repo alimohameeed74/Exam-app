@@ -1,0 +1,48 @@
+<!-- Page title banner -->
+<section class="flex items-center gap-3 bg-[#2F5BEA] text-white px-5 py-4 mb-6 shadow-sm text-3xl">
+  <i class="fa-solid fa-graduation-cap"></i>
+  <h2 class="font-bold font-inter">Diplomas</h2>
+</section>
+
+<!-- Diploma cards grid -->
+<section aria-label="Available diploma programs">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+    @for (diploma of diplomas(); track diploma.id) {
+      <app-diploma-card [diploma]="diploma"></app-diploma-card>
+    } @empty {
+      <div
+        class="col-span-full flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 py-16 text-center"
+      >
+        <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
+          <i class="fa-solid fa-graduation-cap text-2xl text-slate-400"></i>
+        </div>
+
+        <h3 class="text-lg font-semibold text-slate-700">No diplomas found</h3>
+
+        <p class="mt-2 max-w-md text-sm text-slate-500">
+          There are currently no diplomas available. Please check back later.
+        </p>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- Scroll indicator -->
+@if (diplomas().length !== 0) {
+  <div
+    (click)="seeMore()"
+    class="flex flex-col items-center gap-1 mt-8 text-gray-400 text-sm"
+    role="note"
+  >
+    <button>Scroll to view more</button>
+    <svg
+      class="w-4 h-4 animate-bounce"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      aria-hidden="true"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </div>
+}
