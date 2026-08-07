@@ -147,7 +147,6 @@ export class ExamQuestionsComponent implements OnInit {
           this.submissionDetails.set(res);
           this.toaster.success('End of exam', 'Success');
           this.examState.set('submitted');
-          console.log(this.submissionDetails()?.analytics);
         },
       });
   }
@@ -187,7 +186,6 @@ export class ExamQuestionsComponent implements OnInit {
     }
   }
   explore() {
-    console.log('s');
     this.router.navigate(['/main']);
   }
 }

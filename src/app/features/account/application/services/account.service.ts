@@ -6,6 +6,7 @@ import { ApiResponse } from '../../../../core/models/response/api-response.js';
 import { LoggedUser } from '../../../auth/domain/models/response/logged-user.js';
 import { UpdateProfileReq } from '../../domian/models/request/update-profile-req.js';
 import { NewEmailRequest } from '../../domian/models/request/new-email-request.js';
+import { ChangePasswordRequest } from '../../domian/models/request/change-password-request.js';
 
 @Injectable({
   providedIn: 'root',
@@ -23,8 +24,13 @@ export class AccountService {
       .patch<ApiResponse<{ user: LoggedUser }>>(`${environment.apiURL}/users/profile`, data)
       .pipe(map((res) => res.payload.user));
   }
-  changePassword(data: any): Observable<any> {
-    return this.httpClient.post<any>(`${environment.apiURL}/users/change-password`, data);
+  changePassword(
+    data: ChangePasswordRequest,
+  ): Observable<{ status: boolean; message: string; code: string }> {
+    return this.httpClient.post<{ status: boolean; message: string; code: string }>(
+      `${environment.apiURL}/users/change-password`,
+      data,
+    );
   }
   requestEmailChange(
     data: NewEmailRequest,
