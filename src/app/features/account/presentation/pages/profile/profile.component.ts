@@ -10,22 +10,21 @@ import { AlertComponent } from '../../../../../shared/components/alert/alert.com
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserDataService } from '../../../../auth/application/services/user-data.service.js';
 import { Router } from '@angular/router';
+import { UserData } from '../../../domian/models/response/user-data.js';
+import { GeneralResponse } from '../../../domian/models/response/general-response.js';
+import { ConfirmDialogComponent } from '../../../../../shared/components/confirm-dialog/confirm-dialog.component';
 
-export interface UserData {
-  token: string;
-  user: {
-    email: string;
-    username: string;
-    role: 'ADMIN' | 'USER';
-    fName: string;
-    lName: string;
-  };
-}
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
-  imports: [SharedInputComponent, ErrorMessComponent, ReactiveFormsModule, AlertComponent],
+  imports: [
+    SharedInputComponent,
+    ErrorMessComponent,
+    ReactiveFormsModule,
+    AlertComponent,
+    ConfirmDialogComponent,
+  ],
 })
 export class ProfileComponent implements OnInit {
   private fb = inject(FormBuilder);
@@ -144,7 +143,7 @@ export class ProfileComponent implements OnInit {
       .updateUserProfile(updatedForm)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (res: any) => {
+        next: (res: LoggedUser) => {
           this.toasterService.success('Profile updated successfully.', 'Success');
           this.fillForm(res);
         },
@@ -171,7 +170,7 @@ export class ProfileComponent implements OnInit {
         .requestEmailChange(this.newEmailForm.getRawValue())
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
-          next: (res: { status: boolean; message: string; code: string }) => {
+          next: (res: GeneralResponse) => {
             this.err.set(false);
             this.toasterService.success(res.message, 'Success');
             this.step.set(this.step() + 1);
@@ -211,7 +210,7 @@ export class ProfileComponent implements OnInit {
       .deleteAccount()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (res: { status: boolean; message: string; code: string }) => {
+        next: (res: GeneralResponse) => {
           this.toasterService.success(res.message, 'Success');
           console.log(res);
           this.userDataService.logout();

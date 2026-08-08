@@ -7,6 +7,7 @@ import { LoggedUser } from '../../../auth/domain/models/response/logged-user.js'
 import { UpdateProfileReq } from '../../domian/models/request/update-profile-req.js';
 import { NewEmailRequest } from '../../domian/models/request/new-email-request.js';
 import { ChangePasswordRequest } from '../../domian/models/request/change-password-request.js';
+import { GeneralResponse } from '../../domian/models/response/general-response.js';
 
 @Injectable({
   providedIn: 'root',
@@ -24,30 +25,21 @@ export class AccountService {
       .patch<ApiResponse<{ user: LoggedUser }>>(`${environment.apiURL}/users/profile`, data)
       .pipe(map((res) => res.payload.user));
   }
-  changePassword(
-    data: ChangePasswordRequest,
-  ): Observable<{ status: boolean; message: string; code: string }> {
-    return this.httpClient.post<{ status: boolean; message: string; code: string }>(
+  changePassword(data: ChangePasswordRequest): Observable<GeneralResponse> {
+    return this.httpClient.post<GeneralResponse>(
       `${environment.apiURL}/users/change-password`,
       data,
     );
   }
-  requestEmailChange(
-    data: NewEmailRequest,
-  ): Observable<{ status: boolean; message: string; code: string }> {
-    return this.httpClient.post<{ status: boolean; message: string; code: string }>(
-      `${environment.apiURL}/users/email/request`,
-      data,
-    );
+  requestEmailChange(data: NewEmailRequest): Observable<GeneralResponse> {
+    return this.httpClient.post<GeneralResponse>(`${environment.apiURL}/users/email/request`, data);
   }
   confirmEmailChange(data: { code: string }): Observable<LoggedUser> {
     return this.httpClient
       .post<ApiResponse<{ user: LoggedUser }>>(`${environment.apiURL}/users/email/confirm`, data)
       .pipe(map((res) => res.payload.user));
   }
-  deleteAccount(): Observable<{ status: boolean; message: string; code: string }> {
-    return this.httpClient.delete<{ status: boolean; message: string; code: string }>(
-      `${environment.apiURL}/users/account`,
-    );
+  deleteAccount(): Observable<GeneralResponse> {
+    return this.httpClient.delete<GeneralResponse>(`${environment.apiURL}/users/account`);
   }
 }

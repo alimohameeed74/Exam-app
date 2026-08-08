@@ -332,90 +332,16 @@
 
   <!-- Confirm Dialog -->
   @if (showConfirmDialog()) {
-    <div
-      class="fixed w-full inset-0 z-999 flex items-center justify-center bg-black/50 p-4 font-geist"
+    <app-confirm-dialog
+      [icon]="'fa-solid fa-trash-can'"
+      [title]="'Are you sure you want to delete your account?'"
+      [message]="'This action is pemanent and cannot be undone.'"
+      [confirmButtonText]="'Yes, Delete'"
+      [cancelButtonText]="'Cancel'"
+      [type]="'danger'"
+      (onSubmit)="deleteAccount()"
+      (onCancel)="closeConfirmDialog()"
     >
-      <div class="relative w-75 sm:w-lg">
-        <!-- Modal content -->
-        <div class="relative bg-neutral-primary-soft rounded-base shadow-xl p-4 md:p-6 text-center">
-          <!-- Modal header (Close button) -->
-          <div class="flex justify-end">
-            <button
-              (click)="closeConfirmDialog()"
-              type="button"
-              class="text-gray-400 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
-            >
-              <svg
-                class="w-3 h-3"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 14"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                />
-              </svg>
-              <span class="sr-only">Close modal</span>
-            </button>
-          </div>
-
-          <!-- Modal body -->
-          <div class="flex flex-col items-center space-y-4 py-2">
-            <!-- Warning Icon -->
-            <div
-              class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-red-50 flex items-center justify-center"
-            >
-              <div
-                class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-100 flex items-center justify-center"
-              >
-                <svg
-                  class="w-6 h-6 sm:w-8 sm:h-8 text-red-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                  />
-                </svg>
-              </div>
-            </div>
-
-            <!-- Title & Subtitle -->
-            <h3 class="text-lg sm:text-xl font-bold text-red-600">
-              Are you sure you want to delete your account?
-            </h3>
-            <p class="text-sm text-gray-500">This action is permanent and cannot be undone.</p>
-          </div>
-
-          <!-- Modal footer -->
-          <div class="grid grid-cols-2 gap-4 pt-6 mt-4 border-t border-default">
-            <button
-              (click)="closeConfirmDialog()"
-              type="button"
-              class="w-full text-gray-700 bg-gray-200 hover:bg-gray-300 font-medium rounded-lg text-sm px-5 py-3 text-center transition-colors"
-            >
-              Cancel
-            </button>
-            <button
-              (click)="deleteAccount()"
-              type="button"
-              class="w-full text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg text-sm px-5 py-3 text-center transition-colors"
-            >
-              Yes, delete
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    </app-confirm-dialog>
   }
 </section>
