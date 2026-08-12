@@ -20,7 +20,6 @@ export class SidebarComponent implements OnInit {
     this.showDropDown_.update((v) => !v);
   }
   logout() {
-    console.log('ss');
     this.userDataService.logout();
     this.router.navigate(['/auth']);
   }

@@ -1,0 +1,347 @@
+<section
+  aria-labelledby="profile-heading"
+  class="bg-white border border-gray-300 p-4 sm:p-6 lg:p-8"
+>
+  <h2 id="profile-heading" class="sr-only">Profile Settings</h2>
+
+  <form [formGroup]="accountForm" (ngSubmit)="submit()">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+      <!-- First name -->
+      <div class="flex flex-col">
+        <app-shared-input
+          [control]="firstNameController"
+          [obj]="{ id: 'firstName', label: 'First name:', type: 'text', placeHolder: 'ali' }"
+        ></app-shared-input>
+        @if (firstNameController.touched && firstNameController.errors) {
+          @if (firstNameController.hasError('required')) {
+            <app-error-mess mess="Your fisrt name is required"></app-error-mess>
+          }
+          @if (firstNameController.hasError('pattern')) {
+            <app-error-mess mess="Invalid name"></app-error-mess>
+          }
+        }
+      </div>
+
+      <!-- Last name -->
+      <div class="falex flex-col">
+        <app-shared-input
+          [control]="lastNameController"
+          [obj]="{ id: 'lastName', label: 'Last name:', type: 'text', placeHolder: 'mohamed' }"
+        ></app-shared-input>
+        @if (lastNameController.touched && lastNameController.errors) {
+          @if (lastNameController.hasError('required')) {
+            <app-error-mess mess="Your last name is required"></app-error-mess>
+          }
+          @if (lastNameController.hasError('pattern')) {
+            <app-error-mess mess="Invalid name"></app-error-mess>
+          }
+        }
+      </div>
+
+      <!-- Username -->
+      <div class="relative sm:col-span-2">
+        <app-shared-input
+          [control]="userNameController"
+          [obj]="{ id: 'username', label: 'Username:', type: 'text', placeHolder: 'mohamed' }"
+        ></app-shared-input>
+        @if (userNameController.touched && userNameController.errors) {
+          @if (userNameController.hasError('required')) {
+            <app-error-mess mess="Username is required"></app-error-mess>
+          }
+          @if (userNameController.hasError('pattern')) {
+            <app-error-mess mess="Invalid username"></app-error-mess>
+          }
+        }
+      </div>
+
+      <!-- Email -->
+      <div class="relative sm:col-span-2">
+        <div class="absolute z-999 right-0">
+          <button
+            (click)="openDialog()"
+            type="button"
+            class="flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700 font-medium"
+          >
+            <svg
+              class="w-3.5 h-3.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+              />
+            </svg>
+            Change
+          </button>
+        </div>
+
+        <app-shared-input
+          [control]="emailController"
+          [obj]="{ id: 'email', label: 'Email:', type: 'email', placeHolder: 'mohamed' }"
+        ></app-shared-input>
+        @if (emailController.touched && emailController.errors) {
+          @if (emailController.hasError('required')) {
+            <app-error-mess mess="Your email is required"></app-error-mess>
+          }
+          @if (emailController.hasError('email')) {
+            <app-error-mess mess="Invalid email"></app-error-mess>
+          }
+        }
+      </div>
+
+      <!-- Phone -->
+      <div class="sm:col-span-2">
+        <app-shared-input
+          [control]="phoneController"
+          [obj]="{
+            id: 'phone',
+            label: 'Phone:',
+            type: 'tel',
+            placeHolder: '01xxxxxxxxx',
+          }"
+        ></app-shared-input>
+        @if (phoneController.touched && phoneController.errors) {
+          @if (phoneController.hasError('required')) {
+            <app-error-mess mess="Your phone number is required"></app-error-mess>
+          }
+          @if (phoneController.hasError('pattern')) {
+            <app-error-mess mess="Invalid phone number"></app-error-mess>
+          }
+        }
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+      <button
+        (click)="openConfirmDialog()"
+        type="button"
+        class="w-full rounded-lg bg-red-50 text-red-500 hover:bg-red-100 font-medium text-sm py-3 transition-colors"
+      >
+        Delete My Account
+      </button>
+
+      <button
+        type="submit"
+        class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center transition-colors disabled:opacity-50"
+      >
+        Save Changes
+      </button>
+    </div>
+  </form>
+
+  <!-- Email modal -->
+  @if (openEmailDialog()) {
+    <div class="fixed w-full inset-0 z-999 flex items-center justify-center bg-black/50 p-4">
+      <div class="relative w-75 sm:w-lg">
+        <!-- Modal content -->
+        <div class="relative bg-neutral-primary-soft rounded-base shadow-xl p-4 md:p-6">
+          <!-- Modal header -->
+          <div class="flex flex-col pb-4 md:pb-5">
+            <!-- Close button on top right -->
+            <div class="flex justify-end">
+              <button
+                (click)="closeDialog()"
+                type="button"
+                class="text-gray-400 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+              >
+                <svg
+                  class="w-3 h-3"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 14"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                  />
+                </svg>
+                <span class="sr-only">Close modal</span>
+              </button>
+            </div>
+
+            <!-- Progress Bar -->
+            @if (step() >= 1) {
+              <ol class="flex items-center my-4 w-full" aria-label="Progress">
+                <!-- Point 1 -->
+                <li class="shrink-0">
+                  <span class="relative block" aria-current="step">
+                    <span
+                      [class]="step() >= 1 ? 'bg-blue-600' : 'border-blue-300 bg-white border-2'"
+                      class="block w-2.5 h-2.5 rounded-sm rotate-45"
+                    ></span>
+                  </span>
+                </li>
+
+                <!-- Line connecting points -->
+                <li class="flex-1 mx-2">
+                  <span
+                    [class]="
+                      step() > 1 ? 'bg-blue-600' : 'border-dashed border-blue-300 border-t-2'
+                    "
+                    class="block w-full h-0.5"
+                  ></span>
+                </li>
+
+                <!-- Point 2 -->
+                <li class="shrink-0">
+                  <span class="relative block" aria-current="step">
+                    <span
+                      [class]="step() === 2 ? 'bg-blue-600' : 'border-blue-300 bg-white border-2'"
+                      class="block w-2.5 h-2.5 rounded-sm rotate-45"
+                    ></span>
+                  </span>
+                </li>
+              </ol>
+            }
+
+            <!-- Modal Title -->
+            <h3 class="text-2xl sm:text-3xl font-bold text-gray-80 font-inter">Change Email</h3>
+          </div>
+
+          <!-- Modal body -->
+          <div class="space-y-4 md:space-y-6 py-4 md:py-6">
+            @if (step() === 1) {
+              <h4 class="font-inter text-xl text-blue-600 font-bold">Enter Your New Email</h4>
+              <form [formGroup]="newEmailForm">
+                <app-shared-input
+                  [control]="newEmailController"
+                  [obj]="{
+                    id: 'newEmail',
+                    label: 'Email:',
+                    type: 'email',
+                    placeHolder: 'user@exmaple.com',
+                  }"
+                ></app-shared-input>
+                @if (newEmailController.touched && newEmailController.errors) {
+                  @if (newEmailController.hasError('required')) {
+                    <app-error-mess mess="New email is required"></app-error-mess>
+                  }
+                  @if (newEmailController.hasError('email')) {
+                    <app-error-mess mess="Invalid email"></app-error-mess>
+                  }
+                }
+              </form>
+            }
+            @if (step() === 2) {
+              <form [formGroup]="otpForm">
+                <h2 class="text-lg font-semibold text-blue-600 mt-1 mb-3 font-inter">Verify OTP</h2>
+                <p class="text-sm text-gray-600 mb-6 font-geist">
+                  Please enter the 6-digit code we have sent to:
+                  <span class="text-gray-900">{{ newEmailController.value }}.</span>
+                </p>
+                <fieldset class="w-full">
+                  <legend class="sr-only">6-digit verification code</legend>
+
+                  <div class="flex gap-2 justify-center mb-4" role="group">
+                    <input
+                      formControlName="digit1"
+                      id="otp-1"
+                      type="text"
+                      inputmode="numeric"
+                      maxlength="1"
+                      class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
+                    />
+
+                    <input
+                      formControlName="digit2"
+                      id="otp-2"
+                      type="text"
+                      inputmode="numeric"
+                      maxlength="1"
+                      class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
+                    />
+
+                    <input
+                      formControlName="digit3"
+                      id="otp-3"
+                      type="text"
+                      inputmode="numeric"
+                      maxlength="1"
+                      class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
+                    />
+
+                    <input
+                      formControlName="digit4"
+                      id="otp-4"
+                      type="text"
+                      inputmode="numeric"
+                      maxlength="1"
+                      class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
+                    />
+
+                    <input
+                      formControlName="digit5"
+                      id="otp-5"
+                      type="text"
+                      inputmode="numeric"
+                      maxlength="1"
+                      class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
+                    />
+
+                    <input
+                      formControlName="digit6"
+                      id="otp-6"
+                      type="text"
+                      inputmode="numeric"
+                      maxlength="1"
+                      class="w-9 h-9 text-center text-[12px] border border-gray-200 rounded-sm focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                </fieldset>
+
+                @if (otpForm.touched && otpForm.invalid) {
+                  <app-error-mess mess="Please enter a valid 6-digit code"></app-error-mess>
+                }
+              </form>
+            }
+          </div>
+
+          <!-- Modal footer -->
+          <div class="border-t border-default gap-4 pt-4 md:pt-5">
+            @if (err()) {
+              <app-alert mess="Something went wrong"></app-alert>
+            }
+
+            <button
+              (click)="submit_()"
+              type="button"
+              class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center transition-colors disabled:opacity-50"
+            >
+              @if (step() === 1) {
+                Next
+                <i class="fa-solid fa-arrow-right"></i>
+              } @else if (step() === 2) {
+                Verify OTP
+              }
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Confirm Dialog -->
+  @if (showConfirmDialog()) {
+    <app-confirm-dialog
+      [icon]="'fa-solid fa-trash-can'"
+      [title]="'Are you sure you want to delete your account?'"
+      [message]="'This action is pemanent and cannot be undone.'"
+      [confirmButtonText]="'Yes, Delete'"
+      [cancelButtonText]="'Cancel'"
+      [type]="'danger'"
+      (onSubmit)="deleteAccount()"
+      (onCancel)="closeConfirmDialog()"
+    >
+    </app-confirm-dialog>
+  }
+</section>

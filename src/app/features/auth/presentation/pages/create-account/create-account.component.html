@@ -65,8 +65,8 @@
       <h2 class="text-lg font-semibold text-blue-600 mt-1 mb-3 font-inter">Verify OTP</h2>
       <p class="text-sm text-gray-600 mb-6 font-geist">
         Please enter the 6-digit code we have sent to:
-        <span class="text-gray-900">user@example.com</span>.
-        <button (click)="decreaseStep()" class="text-blue-600 hover:underline">Edit</button>
+        <span class="text-gray-900">{{ emailController.value }}.</span>
+        <button (click)="decreaseStep()" class="text-blue-600 ms-2 hover:underline">Edit</button>
       </p>
     } @else if (step() === 3) {
       <h2 class="text-lg font-semibold text-blue-600 mt-1 mb-6 font-inter">

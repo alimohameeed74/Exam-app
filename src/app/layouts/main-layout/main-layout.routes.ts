@@ -5,12 +5,12 @@ export const routes: Routes = [
     path: 'diplomas',
     loadChildren: () => import('../../features/diplomas/diplomas.routes').then((r) => r.routes),
   },
-  // This code was prepared for the future task.
-  //    {
-  //     path: 'account-settings',
-  //     loadComponent: () =>
-  //       import('../../features/account-settings/presentation/pages/account-settings/account-settings.component').then(
-  //         (p) => p.AccountSettinhComponent,
-  //       ),
-  //   },
+  {
+    path: 'account',
+    loadComponent: () =>
+      import('../../features/account/presentation/layout/account-layout/account-layout.component').then(
+        (p) => p.AccountLayoutComponent,
+      ),
+    loadChildren: () => import('../../features/account/account.routes').then((r) => r.routes),
+  },
 ];
