@@ -27,7 +27,6 @@ export class DiplomasListComponent implements OnInit {
       .subscribe({
         next: (res: DiplomaResponse[]) => {
           if (res.length !== 0) {
-            console.log(res);
             this.diplomas.update((v) => [...v, ...res]);
           }
         },

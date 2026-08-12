@@ -189,7 +189,6 @@ export class ProfileComponent implements OnInit {
         .subscribe({
           next: (res: LoggedUser) => {
             this.err.set(false);
-            console.log(res);
             this.toasterService.success('Email updated successfully.', 'Success');
             this.fillForm(res);
             this.closeDialog();
@@ -212,7 +211,6 @@ export class ProfileComponent implements OnInit {
       .subscribe({
         next: (res: GeneralResponse) => {
           this.toasterService.success(res.message, 'Success');
-          console.log(res);
           this.userDataService.logout();
           this.router.navigate(['/auth']);
         },
