@@ -1,7 +1,6 @@
+import { retryInterceptor } from './retry.interceptor';
 import { TestBed } from '@angular/core/testing';
 import { HttpInterceptorFn } from '@angular/common/http';
-
-import { retryInterceptor } from './retry-interceptor';
 
 describe('retryInterceptor', () => {
   const interceptor: HttpInterceptorFn = (req, next) =>
