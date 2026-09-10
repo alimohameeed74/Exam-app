@@ -3,10 +3,8 @@ import { Component, DestroyRef, inject, OnInit, signal, WritableSignal } from '@
 import { ActivatedRoute } from '@angular/router';
 import { DiplomaService } from '../../../application/services/diploma/diploma.service.js';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DiplomaExamResponse } from '../../../domain/models/response/diploma-exam-response.js';
 import { ExamCardComponent } from '../../components/exam-card/exam-card.component';
 import { Location } from '@angular/common';
-import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-diploma-exams',

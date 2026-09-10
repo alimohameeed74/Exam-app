@@ -206,13 +206,6 @@ describe('ProfileComponent', () => {
 
     component.accountForm.updateValueAndValidity();
 
-    console.log(component.accountForm.valid);
-    console.log(component.accountForm.controls.username.errors);
-    console.log(component.accountForm.controls.email.errors);
-    console.log(component.accountForm.controls.firstName.errors);
-    console.log(component.accountForm.controls.lastName.errors);
-    console.log(component.accountForm.controls.phone.errors);
-
     component.submit();
 
     expect(updateSpy).toHaveBeenCalled();
