@@ -20,7 +20,7 @@ import { filter } from 'rxjs';
 export class NavbarComponent implements OnInit {
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
-  links: WritableSignal<string[]> = signal([]);
+  links: WritableSignal<string[]> = signal(['Main', 'diplomas', 'list']);
   ngOnInit() {
     this.router.events
       .pipe(

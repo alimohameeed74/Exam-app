@@ -35,7 +35,6 @@ export class DiplomaExamsComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res: DiplomaResponse) => {
-          res;
           this.diplomaDetails.set(res);
         },
       });
