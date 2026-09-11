@@ -1,12 +1,12 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { FlowbiteService } from './flowbite.service';
 
 describe('Service: Flowbite', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [FlowbiteService]
+      providers: [FlowbiteService],
     });
   });
 
