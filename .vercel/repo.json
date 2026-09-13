@@ -1,0 +1,11 @@
+{
+  "remoteName": "origin",
+  "projects": [
+    {
+      "id": "prj_lxHrmjNJ61zSJvcg9MwZV0uHInMO",
+      "name": "exam-app",
+      "directory": ".",
+      "orgId": "team_5Qtlj8DkO4E44sfgapNyUfSe"
+    }
+  ]
+}
