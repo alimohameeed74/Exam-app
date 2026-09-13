@@ -18,8 +18,6 @@ describe('UserDataService', () => {
   };
 
   beforeEach(() => {
-    localStorage.clear();
-
     TestBed.configureTestingModule({
       providers: [
         UserDataService,

@@ -79,6 +79,12 @@ describe('ForgetPasswordComponent', () => {
     component = fixture.componentInstance;
   });
 
+  const setValidEmail = () => {
+    component.emailForm.setValue({
+      email: 'test@example.com',
+    });
+  };
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -97,9 +103,7 @@ describe('ForgetPasswordComponent', () => {
   });
 
   it('should call forget password when email form is valid', () => {
-    component.emailForm.setValue({
-      email: 'test@example.com',
-    });
+    setValidEmail();
 
     component.increaseStep();
 
@@ -109,9 +113,7 @@ describe('ForgetPasswordComponent', () => {
   });
 
   it('should move to step 2 after forget password succeeds', () => {
-    component.emailForm.setValue({
-      email: 'test@example.com',
-    });
+    setValidEmail();
 
     component.increaseStep();
 
@@ -119,9 +121,7 @@ describe('ForgetPasswordComponent', () => {
   });
 
   it('should show success toast after forget password succeeds', () => {
-    component.emailForm.setValue({
-      email: 'test@example.com',
-    });
+    setValidEmail();
 
     component.increaseStep();
 
@@ -136,9 +136,7 @@ describe('ForgetPasswordComponent', () => {
       })),
     );
 
-    component.emailForm.setValue({
-      email: 'test@example.com',
-    });
+    setValidEmail();
 
     component.increaseStep();
 
@@ -237,9 +235,7 @@ describe('ForgetPasswordComponent', () => {
   it('should decrease step and reset forms', () => {
     component.step.set(2);
 
-    component.emailForm.setValue({
-      email: 'test@example.com',
-    });
+    setValidEmail();
 
     component.passwordsForm.setValue({
       token: 'token',

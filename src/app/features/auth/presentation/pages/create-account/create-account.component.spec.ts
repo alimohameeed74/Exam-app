@@ -94,6 +94,33 @@ describe('CreateAccountComponent', () => {
     component = fixture.componentInstance;
   });
 
+  const fillValidRegisterForm = () => {
+    component.registerForm.setValue({
+      username: 'testuser',
+      email: 'test@example.com',
+      password: 'TestPassword123!',
+      confirmPassword: 'TestPassword123!',
+      firstName: 'Ali',
+      lastName: 'Mohamed',
+      phone: '01012345678',
+    });
+  };
+
+  const setupValidOtp = () => {
+    component.step.set(2);
+
+    component.emailController.setValue('test@example.com');
+
+    component.otpForm.setValue({
+      digit1: '1',
+      digit2: '2',
+      digit3: '3',
+      digit4: '4',
+      digit5: '5',
+      digit6: '6',
+    });
+  };
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -118,15 +145,7 @@ describe('CreateAccountComponent', () => {
   });
 
   it('should register successfully', () => {
-    component.registerForm.setValue({
-      username: 'testuser',
-      email: 'test@example.com',
-      password: 'TestPassword123!',
-      confirmPassword: 'TestPassword123!',
-      firstName: 'Ali',
-      lastName: 'Mohamed',
-      phone: '01012345678',
-    });
+    fillValidRegisterForm();
 
     component.register();
 
@@ -134,15 +153,7 @@ describe('CreateAccountComponent', () => {
   });
 
   it('should store user data after successful registration', () => {
-    component.registerForm.setValue({
-      username: 'testuser',
-      email: 'test@example.com',
-      password: 'TestPassword123!',
-      confirmPassword: 'TestPassword123!',
-      firstName: 'Ali',
-      lastName: 'Mohamed',
-      phone: '01012345678',
-    });
+    fillValidRegisterForm();
 
     component.register();
 
@@ -159,15 +170,7 @@ describe('CreateAccountComponent', () => {
   });
 
   it('should show success toast after successful registration', () => {
-    component.registerForm.setValue({
-      username: 'testuser',
-      email: 'test@example.com',
-      password: 'TestPassword123!',
-      confirmPassword: 'TestPassword123!',
-      firstName: 'Ali',
-      lastName: 'Mohamed',
-      phone: '01012345678',
-    });
+    fillValidRegisterForm();
 
     component.register();
 
@@ -175,15 +178,7 @@ describe('CreateAccountComponent', () => {
   });
 
   it('should navigate to main after successful registration', () => {
-    component.registerForm.setValue({
-      username: 'testuser',
-      email: 'test@example.com',
-      password: 'TestPassword123!',
-      confirmPassword: 'TestPassword123!',
-      firstName: 'Ali',
-      lastName: 'Mohamed',
-      phone: '01012345678',
-    });
+    fillValidRegisterForm();
 
     component.register();
 
@@ -198,15 +193,7 @@ describe('CreateAccountComponent', () => {
       })),
     );
 
-    component.registerForm.setValue({
-      username: 'testuser',
-      email: 'test@example.com',
-      password: 'TestPassword123!',
-      confirmPassword: 'TestPassword123!',
-      firstName: 'Ali',
-      lastName: 'Mohamed',
-      phone: '01012345678',
-    });
+    fillValidRegisterForm();
 
     component.register();
 
@@ -276,18 +263,7 @@ describe('CreateAccountComponent', () => {
   });
 
   it('should confirm email with OTP when OTP is valid', () => {
-    component.step.set(2);
-
-    component.emailController.setValue('test@example.com');
-
-    component.otpForm.setValue({
-      digit1: '1',
-      digit2: '2',
-      digit3: '3',
-      digit4: '4',
-      digit5: '5',
-      digit6: '6',
-    });
+    setupValidOtp();
 
     component.increaseStep();
 
@@ -298,18 +274,7 @@ describe('CreateAccountComponent', () => {
   });
 
   it('should move to step 3 after confirming email', () => {
-    component.step.set(2);
-
-    component.emailController.setValue('test@example.com');
-
-    component.otpForm.setValue({
-      digit1: '1',
-      digit2: '2',
-      digit3: '3',
-      digit4: '4',
-      digit5: '5',
-      digit6: '6',
-    });
+    setupValidOtp();
 
     component.increaseStep();
 
@@ -317,18 +282,7 @@ describe('CreateAccountComponent', () => {
   });
 
   it('should show success toast after confirming email', () => {
-    component.step.set(2);
-
-    component.emailController.setValue('test@example.com');
-
-    component.otpForm.setValue({
-      digit1: '1',
-      digit2: '2',
-      digit3: '3',
-      digit4: '4',
-      digit5: '5',
-      digit6: '6',
-    });
+    setupValidOtp();
 
     component.increaseStep();
 
@@ -343,18 +297,7 @@ describe('CreateAccountComponent', () => {
       })),
     );
 
-    component.step.set(2);
-
-    component.emailController.setValue('test@example.com');
-
-    component.otpForm.setValue({
-      digit1: '1',
-      digit2: '2',
-      digit3: '3',
-      digit4: '4',
-      digit5: '5',
-      digit6: '6',
-    });
+    setupValidOtp();
 
     component.increaseStep();
 
