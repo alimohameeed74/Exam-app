@@ -44,17 +44,35 @@ describe('ChangePasswordComponent', () => {
     component = fixture.componentInstance;
   });
 
-  // ---------------------------
   // Component
-  // ---------------------------
 
   it('should be created', () => {
     expect(component).toBeTruthy();
   });
 
-  // ---------------------------
+  // confirmPassword
+
+  it('should be invalid when confirm password does not match new password', () => {
+    component.passwordForm.setValue({
+      currentPassword: 'OldPassword123!',
+      newPassword: 'NewPassword123!',
+      confirmPassword: 'DifferentPassword123!',
+    });
+
+    expect(component.passwordForm.valid).toBe(false);
+  });
+
+  it('should be valid when confirm password matches new password', () => {
+    component.passwordForm.setValue({
+      currentPassword: 'OldPassword123!',
+      newPassword: 'NewPassword123!',
+      confirmPassword: 'NewPassword123!',
+    });
+
+    expect(component.passwordForm.valid).toBe(true);
+  });
+
   // updatePassword - Invalid Form
-  // ---------------------------
 
   it('should not change password when form is invalid', () => {
     component.updatePassword();
@@ -62,9 +80,7 @@ describe('ChangePasswordComponent', () => {
     expect(accountService.changePassword).not.toHaveBeenCalled();
   });
 
-  // ---------------------------
   // updatePassword - Success
-  // ---------------------------
 
   it('should change password successfully', () => {
     const response = {
@@ -100,9 +116,7 @@ describe('ChangePasswordComponent', () => {
     });
   });
 
-  // ---------------------------
   // updatePassword - Error
-  // ---------------------------
 
   it('should set error signal when change password fails', () => {
     accountService.changePassword.mockReturnValue(
